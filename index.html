@@ -6,6 +6,8 @@
     <title>L2H - Comunidad de Propietarios</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="translations.js" defer></script>
     <script src="theme.js" defer></script>
     <style>
         .welcome-container {
@@ -34,11 +36,22 @@
             box-shadow: var(--shadow);
         }
 
+        .welcome-card .logo-icon {
+            font-size: 64px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
         .welcome-card h1 {
             font-size: 32px;
             color: #4a5568;
             margin: 0 0 16px 0;
             font-weight: 700;
+        }
+
+        html[data-theme="dark"] .welcome-card h1,
+        html[data-theme="dark"] .welcome-card p {
+            color: var(--text-primary);
         }
 
         .welcome-card p {
@@ -64,7 +77,13 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .welcome-btn i {
+            font-size: 16px;
         }
 
         .welcome-btn-primary {
@@ -84,21 +103,38 @@
             border: 1px solid #cbd5e0;
         }
 
+        html[data-theme="dark"] .welcome-btn-secondary {
+            background: var(--input-bg);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
         .welcome-btn-secondary:hover {
             background: #edf2f7;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        html[data-theme="dark"] .welcome-btn-secondary:hover {
+            background: var(--hover-bg);
         }
     </style>
 </head>
 <body>
     <div class="welcome-container">
         <div class="welcome-card">
-            <h1>L2H</h1>
-            <p>Comunidad de Propietarios Lomas 2</p>
+            <i class="fas fa-home logo-icon"></i>
+            <h1 data-i18n="app.name">L2H</h1>
+            <p data-i18n="app.subtitle">Comunidad de Propietarios Lomas 2</p>
             <div class="welcome-buttons">
-                <a href="login.html" class="welcome-btn welcome-btn-primary">Iniciar Sesión</a>
-                <a href="register.html" class="welcome-btn welcome-btn-secondary">Registrarse</a>
+                <a href="login.html" class="welcome-btn welcome-btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span data-i18n="nav.login">Iniciar Sesión</span>
+                </a>
+                <a href="register.html" class="welcome-btn welcome-btn-secondary">
+                    <i class="fas fa-user-plus"></i>
+                    <span data-i18n="nav.register">Registrarse</span>
+                </a>
             </div>
         </div>
     </div>

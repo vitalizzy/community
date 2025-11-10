@@ -6,6 +6,8 @@
     <title>L2H - Dashboard</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="translations.js" defer></script>
     <script src="theme.js" defer></script>
     <style>
         .dashboard-nav {
@@ -25,6 +27,17 @@
             margin: 0;
             font-size: 24px;
             color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        html[data-theme="dark"] .dashboard-nav h1 {
+            color: var(--text-primary);
+        }
+
+        .dashboard-nav h1 i {
+            color: #667eea;
         }
 
         .logout-btn {
@@ -37,6 +50,9 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logout-btn:hover {
@@ -45,15 +61,30 @@
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
 
+        .logout-btn i {
+            font-size: 16px;
+        }
+
         .welcome-section {
             text-align: center;
             padding: 60px 20px;
+        }
+
+        .welcome-section .icon-wrapper {
+            font-size: 64px;
+            color: #667eea;
+            margin-bottom: 20px;
         }
 
         .welcome-section h2 {
             font-size: 28px;
             color: #4a5568;
             margin: 0 0 16px 0;
+        }
+
+        html[data-theme="dark"] .welcome-section h2,
+        html[data-theme="dark"] .welcome-section p {
+            color: var(--text-primary);
         }
 
         .welcome-section p {
@@ -66,13 +97,22 @@
 <body>
     <div id="dashboard-container">
         <div class="dashboard-nav">
-            <h1>L2H - Panel de Control</h1>
-            <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            <h1>
+                <i class="fas fa-chart-line"></i>
+                <span data-i18n="dashboard.title">Panel de Control</span>
+            </h1>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span data-i18n="nav.logout">Cerrar Sesión</span>
+            </button>
         </div>
 
         <div class="welcome-section">
-            <h2>Bienvenido a L2H</h2>
-            <p>Comunidad de Propietarios Lomas 2 - Portal de Gestión</p>
+            <div class="icon-wrapper">
+                <i class="fas fa-home"></i>
+            </div>
+            <h2 data-i18n="dashboard.welcome">Bienvenido a L2H</h2>
+            <p data-i18n="dashboard.subtitle">Comunidad de Propietarios Lomas 2 - Portal de Gestión</p>
         </div>
     </div>
 
