@@ -266,6 +266,66 @@
             color: #5568d3;
         }
 
+        .gdpr-container {
+            margin: 20px 0;
+            padding: 16px;
+            background: #f7fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+        }
+
+        html[data-theme="dark"] .gdpr-container {
+            background: var(--input-bg);
+            border-color: var(--border-color);
+        }
+
+        .gdpr-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .gdpr-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-top: 2px;
+            accent-color: #667eea;
+        }
+
+        .gdpr-text {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        html[data-theme="dark"] .gdpr-text {
+            color: var(--text-secondary);
+        }
+
+        .gdpr-text a {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .gdpr-text a:hover {
+            color: #5568d3;
+        }
+
+        .gdpr-error {
+            display: none;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #dc3545;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .gdpr-error.show {
+            display: flex;
+        }
+
         .alert {
             padding: 12px 16px;
             border-radius: 6px;
@@ -585,6 +645,19 @@
                     </div>
                 </div>
 
+                <div class="gdpr-container">
+                    <label class="gdpr-checkbox">
+                        <input type="checkbox" id="gdprAccept" name="gdprAccept" required>
+                        <span class="gdpr-text">
+                            He leído y acepto la <a href="#" target="_blank">Política de Privacidad</a> y el tratamiento de mis datos personales conforme al Reglamento General de Protección de Datos (GDPR). Consiento el uso de mi información para la gestión de la comunidad L2H.
+                        </span>
+                    </label>
+                    <span class="gdpr-error" id="gdprError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Debes aceptar la política de privacidad para continuar</span>
+                    </span>
+                </div>
+
                 <button type="submit" class="login-btn" id="registerBtn">
                     <i class="fas fa-user-plus"></i>
                     <span data-i18n="register.button">Registrarse</span>
@@ -695,13 +768,21 @@
             const planta = document.getElementById('planta').value;
             const letra = document.getElementById('letra').value;
             const tipo = document.getElementById('tipo').value;
+            const gdprAccept = document.getElementById('gdprAccept').checked;
             
             document.querySelectorAll('.form-error').forEach(error => {
                 error.classList.remove('show');
             });
+            document.getElementById('gdprError').classList.remove('show');
             
             if (!name || !email || !password || !bloque || !portal || !planta || !letra || !tipo) {
                 showAlert(i18n ? i18n.translate('register.error.allRequired') : 'Todos los campos son obligatorios', 'error');
+                return;
+            }
+
+            if (!gdprAccept) {
+                document.getElementById('gdprError').classList.add('show');
+                showAlert('Debes aceptar la política de privacidad para continuar', 'error');
                 return;
             }
             

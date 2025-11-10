@@ -72,6 +72,10 @@ class TranslationManager {
                 'register.error.emailInvalid': 'El correo electrónico no es válido',
                 'register.error.passwordWeak': 'La contraseña debe tener al menos 8 caracteres',
                 'register.success': 'Registro exitoso. Redirigiendo...',
+                'register.gdpr.text': 'He leído y acepto la',
+                'register.gdpr.privacy': 'Política de Privacidad',
+                'register.gdpr.consent': 'y el tratamiento de mis datos personales conforme al Reglamento General de Protección de Datos (GDPR). Consiento el uso de mi información para la gestión de la comunidad L2H.',
+                'register.gdpr.error': 'Debes aceptar la política de privacidad para continuar',
                 
                 // Dashboard
                 'dashboard.title': 'Panel de Control',
@@ -168,6 +172,10 @@ class TranslationManager {
                 'register.error.emailInvalid': 'Email address is not valid',
                 'register.error.passwordWeak': 'Password must be at least 8 characters',
                 'register.success': 'Registration successful. Redirecting...',
+                'register.gdpr.text': 'I have read and accept the',
+                'register.gdpr.privacy': 'Privacy Policy',
+                'register.gdpr.consent': 'and the processing of my personal data in accordance with the General Data Protection Regulation (GDPR). I consent to the use of my information for the management of the L2H community.',
+                'register.gdpr.error': 'You must accept the privacy policy to continue',
                 
                 // Dashboard
                 'dashboard.title': 'Dashboard',
@@ -264,6 +272,10 @@ class TranslationManager {
                 'register.error.emailInvalid': "L'adresse e-mail n'est pas valide",
                 'register.error.passwordWeak': 'Le mot de passe doit contenir au moins 8 caractères',
                 'register.success': 'Inscription réussie. Redirection...',
+                'register.gdpr.text': "J'ai lu et j'accepte la",
+                'register.gdpr.privacy': 'Politique de Confidentialité',
+                'register.gdpr.consent': 'et le traitement de mes données personnelles conformément au Règlement Général sur la Protection des Données (RGPD). Je consens à l\'utilisation de mes informations pour la gestion de la communauté L2H.',
+                'register.gdpr.error': 'Vous devez accepter la politique de confidentialité pour continuer',
                 
                 // Tableau de bord
                 'dashboard.title': 'Tableau de Bord',
@@ -360,6 +372,10 @@ class TranslationManager {
                 'register.error.emailInvalid': 'E-Mail-Adresse ist ungültig',
                 'register.error.passwordWeak': 'Passwort muss mindestens 8 Zeichen lang sein',
                 'register.success': 'Registrierung erfolgreich. Weiterleitung...',
+                'register.gdpr.text': 'Ich habe die',
+                'register.gdpr.privacy': 'Datenschutzrichtlinie',
+                'register.gdpr.consent': 'gelesen und akzeptiert sowie die Verarbeitung meiner personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Ich stimme der Nutzung meiner Informationen für die Verwaltung der L2H-Gemeinschaft zu.',
+                'register.gdpr.error': 'Sie müssen die Datenschutzrichtlinie akzeptieren, um fortzufahren',
                 
                 // Dashboard
                 'dashboard.title': 'Dashboard',
