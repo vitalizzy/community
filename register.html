@@ -110,7 +110,49 @@
             color: var(--text-primary);
         }
 
+        .form-group select {
+            padding: 12px 14px 12px 40px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+        }
+
+        html[data-theme="dark"] .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2360a5fa' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        }
+
+        .form-group select:hover {
+            border-color: #a0aec0;
+            background-color: var(--hover-bg);
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        .form-group select option {
+            padding: 10px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+
         html[data-theme="dark"] .form-group input {
+            border-color: var(--input-border);
+        }
+
+        html[data-theme="dark"] .form-group select {
             border-color: var(--input-border);
         }
 
@@ -455,14 +497,14 @@
                         <i class="fas fa-hashtag input-icon"></i>
                         <select id="bloque" name="bloque" required>
                             <option value="">Selecciona el número de bloque</option>
-                            <option value="1">Bloque 1 - Lomas 2</option>
-                            <option value="2">Bloque 2 - Lomas 2</option>
-                            <option value="3">Bloque 3 - Lomas 2</option>
-                            <option value="4">Bloque 4 - Lomas 2</option>
-                            <option value="5">Bloque 5 - Lomas 2</option>
-                            <option value="6">Bloque 6 - Lomas 2</option>
-                            <option value="7">Bloque 7 - Lomas 2</option>
-                            <option value="8">Bloque 8 - Lomas 2</option>
+                            <option value="1">Bloque 1</option>
+                            <option value="2">Bloque 2</option>
+                            <option value="3">Bloque 3</option>
+                            <option value="4">Bloque 4</option>
+                            <option value="5">Bloque 5</option>
+                            <option value="6">Bloque 6</option>
+                            <option value="7">Bloque 7</option>
+                            <option value="8">Bloque 8</option>
                         </select>
                     </div>
                     <span class="form-help">
