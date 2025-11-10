@@ -1,59 +1,95 @@
----
-layout: default
-title: Bienvenido
----
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .welcome-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8f0ff 0%, #f0e8ff 100%);
+        }
 
-# Bienvenido
+        .welcome-card {
+            background: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 500px;
+        }
 
-Ingresa a tu cuenta o crea una nueva
+        .welcome-card h1 {
+            font-size: 32px;
+            color: #4a5568;
+            margin: 0 0 16px 0;
+            font-weight: 700;
+        }
 
-<div class="welcome-buttons">
-    <a href="login.html" class="welcome-btn welcome-btn-primary">Iniciar Sesión</a>
-    <a href="register.html" class="welcome-btn welcome-btn-secondary">Registrarse</a>
-</div>
+        .welcome-card p {
+            font-size: 16px;
+            color: #718096;
+            margin: 0 0 32px 0;
+            line-height: 1.6;
+        }
 
-<style>
-    .welcome-buttons {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 30px;
-    }
+        .welcome-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    .welcome-btn {
-        padding: 12px 32px;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-decoration: none;
-        display: inline-block;
-    }
+        .welcome-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-    .welcome-btn-primary {
-        background: #28a745;
-        color: white;
-        border: 1px solid #1e7e34;
-    }
+        .welcome-btn-primary {
+            background: #667eea;
+            color: white;
+        }
 
-    .welcome-btn-primary:hover {
-        background: #218838;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
-    }
+        .welcome-btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
 
-    .welcome-btn-secondary {
-        background: #f6f8fa;
-        color: #24292e;
-        border: 1px solid #e1e4e8;
-    }
+        .welcome-btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #cbd5e0;
+        }
 
-    .welcome-btn-secondary:hover {
-        background: #f3f4f6;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-</style>
+        .welcome-btn-secondary:hover {
+            background: #edf2f7;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <h1>Bienvenido</h1>
+            <p>Ingresa a tu cuenta o crea una nueva</p>
+            <div class="welcome-buttons">
+                <a href="login.html" class="welcome-btn welcome-btn-primary">Iniciar Sesión</a>
+                <a href="register.html" class="welcome-btn welcome-btn-secondary">Registrarse</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
