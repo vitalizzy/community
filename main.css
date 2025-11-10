@@ -55,6 +55,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Eliminar scroll en páginas de autenticación */
+body.no-scroll {
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
+}
+
 #financial-dashboard {
     max-width: 1400px;
     margin: 0 auto;
