@@ -277,6 +277,17 @@
                     <span class="form-help">Letra de identificación de la vivienda</span>
                 </div>
 
+                <div class="form-group">
+                    <label for="tipo">Tipo de Propietario <span style="color: #dc3545;">*</span></label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecciona tu rol</option>
+                        <option value="Dueno">Dueño</option>
+                        <option value="PropertyManager">Property Manager</option>
+                        <option value="Inquilino">Inquilino</option>
+                    </select>
+                    <span class="form-help">¿Cuál es tu relación con la propiedad?</span>
+                </div>
+
                 <button type="submit" class="register-btn">Registrarse</button>
             </form>
 
@@ -310,13 +321,14 @@
             const portal = document.getElementById('portal').value;
             const planta = document.getElementById('planta').value;
             const letra = document.getElementById('letra').value;
+            const tipo = document.getElementById('tipo').value;
             
             if (password !== confirmPassword) {
                 alert('Las contraseñas no coinciden');
                 return;
             }
             
-            if (!name || !email || !password || !bloque || !portal || !planta || !letra) {
+            if (!name || !email || !password || !bloque || !portal || !planta || !letra || !tipo) {
                 alert('Todos los campos son obligatorios');
                 return;
             }
@@ -327,7 +339,8 @@
                 bloque,
                 portal,
                 planta,
-                letra
+                letra,
+                tipo
             });
             window.location.href = 'login.html';
         });
