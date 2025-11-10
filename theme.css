@@ -1,0 +1,75 @@
+/* ============================================================================
+   THEME SYSTEM - L2H
+   ============================================================================ */
+
+:root {
+    /* Colores del tema claro (por defecto) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7fafc;
+    --text-primary: #4a5568;
+    --text-secondary: #718096;
+    --border-color: #cbd5e0;
+    --card-bg: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --input-bg: #ffffff;
+    --input-border: #cbd5e0;
+    --hover-bg: #edf2f7;
+    --accent-light: #667eea;
+}
+
+html[data-theme="dark"] {
+    /* Colores del tema oscuro */
+    --bg-primary: #1a202c;
+    --bg-secondary: #2d3748;
+    --text-primary: #e2e8f0;
+    --text-secondary: #cbd5e0;
+    --border-color: #4a5568;
+    --card-bg: #2d3748;
+    --shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    --input-bg: #1a202c;
+    --input-border: #4a5568;
+    --hover-bg: #374151;
+    --accent-light: #60a5fa;
+}
+
+body {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botón de tema */
+.theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 20px;
+        left: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+}

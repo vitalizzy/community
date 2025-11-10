@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L2H - Registrarse</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js" defer></script>
     <style>
         .register-container {
             display: flex;
@@ -15,6 +17,10 @@
             padding: 20px;
         }
 
+        html[data-theme="dark"] .register-container {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        }
+
         .register-card {
             background: white;
             border-radius: 12px;
@@ -22,6 +28,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 400px;
+        }
+
+        html[data-theme="dark"] .register-card {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
         }
 
         .register-card h1 {

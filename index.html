@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L2H - Comunidad de Propietarios</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js" defer></script>
     <style>
         .welcome-container {
             display: flex;
@@ -14,6 +16,10 @@
             background: linear-gradient(135deg, #e8f0ff 0%, #f0e8ff 100%);
         }
 
+        html[data-theme="dark"] .welcome-container {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        }
+
         .welcome-card {
             background: white;
             border-radius: 12px;
@@ -21,6 +27,11 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             max-width: 500px;
+        }
+
+        html[data-theme="dark"] .welcome-card {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
         }
 
         .welcome-card h1 {
