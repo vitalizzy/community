@@ -1,80 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="main.css">
-    <style>
-        .dashboard-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #d9dde3;
-        }
+---
+layout: default
+title: Dashboard
+---
 
-        .dashboard-nav h1 {
-            margin: 0;
-            font-size: 24px;
-            color: #1f2933;
-        }
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+    <h1 style="margin: 0;">Dashboard</h1>
+    <button onclick="logout()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border: 1px solid #bb2d3b;">Cerrar Sesión</button>
+</div>
 
-        .logout-btn {
-            padding: 10px 20px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+<div style="text-align: center; padding: 40px 20px;">
+    <h2 style="font-size: 24px; color: #24292e; margin: 0 0 16px 0;">Bienvenido</h2>
+    <p style="font-size: 16px; color: #6a737d; margin: 0;">Aquí irá el contenido de la aplicación</p>
+</div>
 
-        .logout-btn:hover {
-            background: #af2f2d;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
-        }
+<script>
+    function logout() {
+        window.location.href = 'index.html';
+    }
+</script>
 
-        .welcome-section {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .welcome-section h2 {
-            font-size: 28px;
-            color: #1f2933;
-            margin: 0 0 16px 0;
-        }
-
-        .welcome-section p {
-            font-size: 16px;
-            color: #52606d;
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-    <div id="financial-dashboard">
-        <div class="dashboard-nav">
-            <h1>Dashboard</h1>
-            <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
-        </div>
-
-        <div class="welcome-section">
-            <h2>Bienvenido</h2>
-            <p>Aquí irá el contenido de la aplicación</p>
-        </div>
-    </div>
-
-    <script>
-        function logout() {
-            // Aquí iría la lógica de logout con Supabase
-            window.location.href = 'index.html';
-        }
-    </script>
-</body>
-</html>
+<style>
+    button:hover {
+        background: #bb2d3b !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+    }
+</style>
