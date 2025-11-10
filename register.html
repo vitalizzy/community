@@ -67,6 +67,42 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
         }
 
+        .form-group select {
+            padding: 12px 14px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row-full {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row,
+            .form-row-full {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .register-btn {
             width: 100%;
             padding: 12px;
@@ -154,6 +190,55 @@
                     <input type="password" id="confirmPassword" name="confirmPassword" required>
                 </div>
 
+                <hr style="border: none; border-top: 1px solid #cbd5e0; margin: 24px 0;">
+
+                <div class="form-group">
+                    <label for="bloque">Bloque</label>
+                    <select id="bloque" name="bloque" required>
+                        <option value="">Selecciona un bloque</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="portal">Portal</label>
+                        <select id="portal" name="portal" required>
+                            <option value="">Selecciona un portal</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="planta">Planta</label>
+                        <select id="planta" name="planta" required onchange="actualizarLetra()">
+                            <option value="">Selecciona una planta</option>
+                            <option value="Bajo">Bajo</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="Atico">Ático</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="letra">Letra</label>
+                    <select id="letra" name="letra" required>
+                        <option value="">Selecciona una letra</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="register-btn">Registrarse</button>
             </form>
 
@@ -164,22 +249,49 @@
     </div>
 
     <script>
+        function actualizarLetra() {
+            const plantaSelect = document.getElementById('planta');
+            const letraSelect = document.getElementById('letra');
+            
+            if (plantaSelect.value === 'Atico') {
+                letraSelect.value = 'A';
+                letraSelect.disabled = true;
+            } else {
+                letraSelect.disabled = false;
+                letraSelect.value = '';
+            }
+        }
+
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const bloque = document.getElementById('bloque').value;
+            const portal = document.getElementById('portal').value;
+            const planta = document.getElementById('planta').value;
+            const letra = document.getElementById('letra').value;
             
             if (password !== confirmPassword) {
                 alert('Las contraseñas no coinciden');
                 return;
             }
             
-            if (name && email && password) {
-                console.log('Intento de registro con:', email);
-                window.location.href = 'login.html';
+            if (!name || !email || !password || !bloque || !portal || !planta || !letra) {
+                alert('Todos los campos son obligatorios');
+                return;
             }
+            
+            console.log('Intento de registro con:', {
+                name,
+                email,
+                bloque,
+                portal,
+                planta,
+                letra
+            });
+            window.location.href = 'login.html';
         });
     </script>
 </body>
