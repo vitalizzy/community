@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - Charts Web Lomas</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .welcome-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+        }
+
+        .welcome-card h1 {
+            font-size: 32px;
+            color: #1f2933;
+            margin: 0 0 16px 0;
+            font-weight: 700;
+        }
+
+        .welcome-card p {
+            font-size: 16px;
+            color: #52606d;
+            margin: 0 0 32px 0;
+            line-height: 1.6;
+        }
+
+        .welcome-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .welcome-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .welcome-btn-primary {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .welcome-btn-primary:hover {
+            background: #0854ca;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .welcome-btn-secondary {
+            background: #f1f3f5;
+            color: #1f2933;
+            border: 1px solid #d9dde3;
+        }
+
+        .welcome-btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <h1>Bienvenido</h1>
+            <p>Sistema de Gestión Financiera de Lomas 2</p>
+            <div class="welcome-buttons">
+                <a href="login.html" class="welcome-btn welcome-btn-primary">Iniciar Sesión</a>
+                <a href="register.html" class="welcome-btn welcome-btn-secondary">Registrarse</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
