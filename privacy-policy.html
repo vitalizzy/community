@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L2H - Política de Privacidad</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="translations.js" defer></script>
+    <script src="theme.js" defer></script>
+    <style>
+        .privacy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #cbd5e0;
+        }
+
+        html[data-theme="dark"] .privacy-header {
+            border-bottom-color: var(--border-color);
+        }
+
+        .privacy-header h1 {
+            font-size: 32px;
+            color: #4a5568;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        html[data-theme="dark"] .privacy-header h1 {
+            color: var(--text-primary);
+        }
+
+        .privacy-header .last-updated {
+            font-size: 14px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        html[data-theme="dark"] .privacy-header .last-updated {
+            color: var(--text-secondary);
+        }
+
+        .privacy-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        html[data-theme="dark"] .privacy-content {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+        }
+
+        .privacy-section {
+            margin-bottom: 30px;
+        }
+
+        .privacy-section h2 {
+            font-size: 24px;
+            color: #667eea;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privacy-section h3 {
+            font-size: 18px;
+            color: #4a5568;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        html[data-theme="dark"] .privacy-section h3 {
+            color: var(--text-primary);
+        }
+
+        .privacy-section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4a5568;
+            margin: 0 0 15px 0;
+        }
+
+        html[data-theme="dark"] .privacy-section p {
+            color: var(--text-secondary);
+        }
+
+        .privacy-section ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .privacy-section li {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        html[data-theme="dark"] .privacy-section li {
+            color: var(--text-secondary);
+        }
+
+        .privacy-section strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        html[data-theme="dark"] .privacy-section strong {
+            color: var(--text-primary);
+        }
+
+        .highlight-box {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        html[data-theme="dark"] .highlight-box {
+            background: var(--input-bg);
+        }
+
+        .contact-box {
+            background: #e6f2ff;
+            border: 1px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        html[data-theme="dark"] .contact-box {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: var(--accent-light);
+        }
+
+        .contact-box h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="privacy-container">
+        <a href="register.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Volver al Registro
+        </a>
+
+        <div class="privacy-header">
+            <h1><i class="fas fa-shield-alt"></i> Política de Privacidad</h1>
+            <p class="last-updated">Última actualización: 11 de noviembre de 2025</p>
+        </div>
+
+        <div class="privacy-content">
+            <div class="privacy-section">
+                <h2><i class="fas fa-info-circle icon"></i> 1. Introducción</h2>
+                <p>
+                    Bienvenido a L2H (Lomas 2 Homeowners), la plataforma de gestión para la Comunidad de Propietarios Lomas 2. 
+                    La presente Política de Privacidad tiene por objeto informarle sobre cómo recogemos, tratamos y protegemos 
+                    sus datos personales de acuerdo con el Reglamento General de Protección de Datos (RGPD/GDPR - Reglamento UE 2016/679) 
+                    y la legislación española aplicable en materia de protección de datos.
+                </p>
+                <p>
+                    Al registrarse y utilizar nuestros servicios, usted acepta las prácticas descritas en esta política.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-building icon"></i> 2. Responsable del Tratamiento</h2>
+                <div class="highlight-box">
+                    <p><strong>Identidad:</strong> Comunidad de Propietarios Lomas 2 (L2H)</p>
+                    <p><strong>Dirección:</strong> [Dirección de la comunidad]</p>
+                    <p><strong>Email de contacto:</strong> privacy@l2h-community.com</p>
+                    <p><strong>Finalidad:</strong> Gestión de la comunidad de propietarios</p>
+                </div>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-database icon"></i> 3. Datos Personales que Recogemos</h2>
+                <p>Recogemos y tratamos los siguientes tipos de datos personales:</p>
+                
+                <h3>3.1. Datos de Identificación</h3>
+                <ul>
+                    <li>Nombre completo</li>
+                    <li>Dirección de correo electrónico</li>
+                    <li>Contraseña (encriptada)</li>
+                </ul>
+
+                <h3>3.2. Datos de la Vivienda</h3>
+                <ul>
+                    <li>Número de bloque</li>
+                    <li>Portal</li>
+                    <li>Planta</li>
+                    <li>Letra de la vivienda</li>
+                    <li>Tipo de propietario (Dueño, Property Manager, Inquilino)</li>
+                </ul>
+
+                <h3>3.3. Datos Técnicos</h3>
+                <ul>
+                    <li>Dirección IP</li>
+                    <li>Datos de navegación (cookies técnicas)</li>
+                    <li>Preferencias de idioma y tema</li>
+                    <li>Fecha y hora de acceso</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-bullseye icon"></i> 4. Finalidad del Tratamiento</h2>
+                <p>Sus datos personales serán tratados con las siguientes finalidades:</p>
+                <ul>
+                    <li><strong>Gestión de usuarios:</strong> Creación y administración de cuentas de usuario en la plataforma.</li>
+                    <li><strong>Comunicaciones de la comunidad:</strong> Envío de notificaciones, avisos y comunicaciones relacionadas con la gestión de la comunidad.</li>
+                    <li><strong>Gestión administrativa:</strong> Administración de cuotas, gastos comunes y documentación de la comunidad.</li>
+                    <li><strong>Seguridad:</strong> Prevención de fraudes y garantía de la seguridad de la plataforma.</li>
+                    <li><strong>Cumplimiento legal:</strong> Cumplimiento de obligaciones legales aplicables a las comunidades de propietarios.</li>
+                    <li><strong>Mejora del servicio:</strong> Análisis estadístico para mejorar la funcionalidad de la plataforma (datos anonimizados).</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-balance-scale icon"></i> 5. Base Legal del Tratamiento</h2>
+                <p>El tratamiento de sus datos personales se fundamenta en:</p>
+                <ul>
+                    <li><strong>Consentimiento:</strong> Al aceptar esta política al registrarse, usted otorga su consentimiento expreso para el tratamiento de sus datos.</li>
+                    <li><strong>Ejecución de un contrato:</strong> El tratamiento es necesario para la gestión de su condición de miembro de la comunidad.</li>
+                    <li><strong>Interés legítimo:</strong> Gestión administrativa y mejora de los servicios de la comunidad.</li>
+                    <li><strong>Cumplimiento de obligaciones legales:</strong> Normativa aplicable a las comunidades de propietarios en España.</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-user-shield icon"></i> 6. Conservación de los Datos</h2>
+                <p>
+                    Sus datos personales serán conservados durante el tiempo que usted sea miembro de la comunidad de propietarios 
+                    o mantenga una relación activa con la misma (como inquilino o property manager).
+                </p>
+                <p>
+                    Una vez finalizada la relación, sus datos serán conservados bloqueados durante los plazos legalmente establecidos 
+                    para atender posibles responsabilidades derivadas del tratamiento, tras lo cual serán eliminados de forma segura.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-share-alt icon"></i> 7. Destinatarios de los Datos</h2>
+                <p>Sus datos podrán ser comunicados a:</p>
+                <ul>
+                    <li><strong>Administrador de fincas:</strong> Para la gestión administrativa de la comunidad.</li>
+                    <li><strong>Proveedores de servicios tecnológicos:</strong> Empresas que prestan servicios de alojamiento, mantenimiento y soporte de la plataforma (sujetos a acuerdos de confidencialidad).</li>
+                    <li><strong>Autoridades públicas:</strong> Cuando sea requerido por ley o para el cumplimiento de obligaciones legales.</li>
+                </ul>
+                <p>
+                    <strong>No vendemos, alquilamos ni compartimos sus datos personales con terceros para fines comerciales.</strong>
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-globe icon"></i> 8. Transferencias Internacionales</h2>
+                <p>
+                    En principio, sus datos se almacenan en servidores ubicados en la Unión Europea. En caso de que sea necesaria 
+                    alguna transferencia internacional de datos, se garantizará el cumplimiento de las garantías adecuadas conforme 
+                    al RGPD (cláusulas contractuales tipo, Privacy Shield, etc.).
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-key icon"></i> 9. Sus Derechos</h2>
+                <p>De acuerdo con el RGPD, usted tiene derecho a:</p>
+                <ul>
+                    <li><strong>Acceso:</strong> Obtener información sobre qué datos personales tratamos sobre usted.</li>
+                    <li><strong>Rectificación:</strong> Solicitar la corrección de datos inexactos o incompletos.</li>
+                    <li><strong>Supresión ("derecho al olvido"):</strong> Solicitar la eliminación de sus datos cuando ya no sean necesarios.</li>
+                    <li><strong>Limitación del tratamiento:</strong> Solicitar que se limite el tratamiento en determinadas circunstancias.</li>
+                    <li><strong>Portabilidad:</strong> Recibir sus datos en un formato estructurado y de uso común.</li>
+                    <li><strong>Oposición:</strong> Oponerse al tratamiento de sus datos en determinadas situaciones.</li>
+                    <li><strong>Revocación del consentimiento:</strong> Retirar el consentimiento prestado en cualquier momento.</li>
+                    <li><strong>Reclamación:</strong> Presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD - www.aepd.es).</li>
+                </ul>
+                <p>
+                    Para ejercer sus derechos, puede contactarnos en: <strong>privacy@l2h-community.com</strong>
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-lock icon"></i> 10. Seguridad de los Datos</h2>
+                <p>
+                    Implementamos medidas técnicas y organizativas apropiadas para proteger sus datos personales contra 
+                    accesos no autorizados, pérdida, destrucción o alteración, incluyendo:
+                </p>
+                <ul>
+                    <li>Encriptación SSL/TLS para todas las comunicaciones</li>
+                    <li>Almacenamiento seguro de contraseñas mediante hash criptográfico</li>
+                    <li>Controles de acceso y autenticación</li>
+                    <li>Copias de seguridad regulares</li>
+                    <li>Monitorización de seguridad continua</li>
+                    <li>Formación del personal en protección de datos</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-cookie-bite icon"></i> 11. Cookies y Tecnologías Similares</h2>
+                <p>
+                    Utilizamos cookies y tecnologías similares estrictamente necesarias para el funcionamiento de la plataforma:
+                </p>
+                <ul>
+                    <li><strong>Cookies técnicas:</strong> Necesarias para la navegación y uso de la plataforma</li>
+                    <li><strong>Cookies de preferencias:</strong> Para recordar su idioma y tema preferido</li>
+                    <li><strong>Cookies de sesión:</strong> Para mantener su sesión iniciada de forma segura</li>
+                </ul>
+                <p>
+                    Estas cookies se almacenan en su navegador local (localStorage) y no se comparten con terceros.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-child icon"></i> 12. Menores de Edad</h2>
+                <p>
+                    Nuestros servicios están dirigidos a personas mayores de 18 años. No recopilamos intencionadamente 
+                    datos de menores de edad sin el consentimiento de sus padres o tutores legales.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-sync-alt icon"></i> 13. Modificaciones de la Política</h2>
+                <p>
+                    Nos reservamos el derecho a modificar esta Política de Privacidad en cualquier momento. 
+                    Las modificaciones serán notificadas a través de la plataforma y/o por correo electrónico. 
+                    La fecha de la última actualización se indica al inicio de este documento.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-gavel icon"></i> 14. Ley Aplicable y Jurisdicción</h2>
+                <p>
+                    Esta Política de Privacidad se rige por la legislación española. Para cualquier controversia 
+                    que pudiera derivarse del acceso o uso de la plataforma, las partes se someten a los juzgados 
+                    y tribunales del domicilio del usuario.
+                </p>
+            </div>
+
+            <div class="contact-box">
+                <h3><i class="fas fa-envelope"></i> Contacto - Delegado de Protección de Datos</h3>
+                <p>
+                    Para cualquier cuestión relacionada con el tratamiento de sus datos personales o para ejercer 
+                    sus derechos, puede contactar con nosotros:
+                </p>
+                <p>
+                    <strong>Email:</strong> privacy@l2h-community.com<br>
+                    <strong>Dirección postal:</strong> [Dirección completa de la comunidad]<br>
+                    <strong>Horario de atención:</strong> Lunes a Viernes, 9:00 - 18:00
+                </p>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 40px; text-align: center;">
+                <p style="margin: 0;">
+                    <strong>Al hacer clic en "Registrarse" en nuestro formulario, usted declara haber leído, 
+                    comprendido y aceptado esta Política de Privacidad.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
