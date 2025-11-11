@@ -1,7 +1,6 @@
 // Sistema de Internacionalización (i18n) para L2H
 class TranslationManager {
     constructor() {
-        this.currentLanguage = localStorage.getItem('l2h-language') || this.detectBrowserLanguage();
         this.translations = {
             es: {
                 // Página principal (index.html)
@@ -404,6 +403,9 @@ class TranslationManager {
                 'language.de': 'Deutsch'
             }
         };
+        
+        // Inicializar el idioma actual DESPUÉS de definir translations
+        this.currentLanguage = localStorage.getItem('l2h-language') || this.detectBrowserLanguage();
         
         this.init();
     }
