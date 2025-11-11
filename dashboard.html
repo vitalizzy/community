@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://*.supabase.co; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://*.supabase.co;">
     <title>L2H - Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -651,6 +652,83 @@
 
         html[data-theme="dark"] .neighbor-property {
             color: var(--accent-light);
+        }
+
+        .neighbor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        html[data-theme="dark"] .neighbor-item {
+            border-bottom-color: var(--border-color);
+        }
+
+        .neighbor-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .neighbor-info {
+            flex: 1;
+        }
+
+        .neighbor-email-btn {
+            padding: 6px 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .neighbor-email-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .neighbor-email-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        html[data-theme="dark"] .neighbor-email-btn {
+            background: #667eea;
+        }
+
+        html[data-theme="dark"] .neighbor-email-btn:hover {
+            background: #5568d3;
+        }
+
+        html[data-theme="dark"] .neighbor-email-btn:disabled {
+            background: #4a5568;
+        }
+
+        @media (max-width: 600px) {
+            .neighbor-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .neighbor-email-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         .empty-state {
