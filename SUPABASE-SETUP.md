@@ -59,39 +59,32 @@
 **IMPORTANTE**: Configura esto para que la confirmación de email redirija correctamente.
 
 1. Ve a **Authentication** → **URL Configuration**
-2. Configura las siguientes URLs según tu entorno:
+2. Configura las siguientes URLs:
 
-   **Para desarrollo local (Live Server - VS Code):**
-   
-   **Site URL**: 
+   **Site URL** (URL principal de producción): 
    ```
-   http://localhost:5500
+   https://vitalizzy.github.io/community
    ```
    
-   **Redirect URLs** (añade todas):
+   **Redirect URLs** (añade todas estas):
    ```
+   https://vitalizzy.github.io/community/**
+   https://vitalizzy.github.io/community/login.html
    http://localhost:5500/**
    http://127.0.0.1:5500/**
    http://localhost:5500/login.html
    http://127.0.0.1:5500/login.html
    ```
 
-   **Para producción:**
-   
-   **Site URL**: 
-   ```
-   https://tu-dominio.com
-   ```
-   
-   **Redirect URLs**:
-   ```
-   https://tu-dominio.com/**
-   https://tu-dominio.com/login.html
-   ```
-
 3. Haz clic en **Save**
 
-> **💡 Tip**: Cuando el usuario se registre, verá un mensaje en pantalla pidiéndole que verifique su email. Después de hacer clic en el enlace del correo, será redirigido a `login.html` automáticamente.
+> **💡 Importante**: 
+> - La URL de producción es `https://vitalizzy.github.io/community/`
+> - El código detecta automáticamente si estás en localhost o producción
+> - En producción, siempre redirige a GitHub Pages
+> - En desarrollo local, redirige a localhost
+
+> **� Flujo de verificación**: Cuando el usuario se registre, verá un mensaje en pantalla pidiéndole que verifique su email. Después de hacer clic en el enlace del correo, será redirigido a `login.html` en la URL de producción.
 
 ### 6️⃣ Verificar Políticas de Seguridad (RLS)
 

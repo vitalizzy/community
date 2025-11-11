@@ -181,12 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         try {
+            // Determinar URL de redirección (producción vs desarrollo)
+            const isLocalhost = window.location.hostname === 'localhost' || 
+                              window.location.hostname === '127.0.0.1';
+            const redirectUrl = isLocalhost 
+                ? `${window.location.origin}/login.html`
+                : 'https://vitalizzy.github.io/community/login.html';
+
             // 1. Registrar usuario en Supabase Auth
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/login.html`,
+                    emailRedirectTo: redirectUrl,
                     data: {
                         nombre: formData.nombre,
                         bloque: formData.bloque,
