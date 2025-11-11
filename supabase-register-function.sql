@@ -4,6 +4,9 @@
 -- Esta función permite insertar datos básicos de propietarios durante el registro
 -- Los datos de vivienda se completan después en el onboarding
 
+-- Primero, eliminar la función anterior si existe (versión con 9 parámetros)
+DROP FUNCTION IF EXISTS public.create_propietario(UUID, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT, TEXT) CASCADE;
+
 -- Crear función para insertar propietario (SOLO DATOS BÁSICOS)
 CREATE OR REPLACE FUNCTION public.create_propietario(
     p_user_id UUID,
