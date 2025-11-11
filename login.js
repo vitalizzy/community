@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const { checkAuth, getCurrentUser, getPropietarioData, logout } = authHelpers;
 
+    // Mostrar notificaciones flotantes desde sessionStorage si existen
+    showNotificationFromSession();
+
     // Verificar si hay un token de confirmación de email en la URL
     handleEmailConfirmation().catch(error => {
         console.error('Error procesando confirmación de email:', error);
@@ -238,6 +241,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         alertDiv.className = 'alert';
         alertDiv.textContent = '';
+    }
+
+    function showFloatingNotification(type, message) {
+        const notification = document.createElement('div');
+        notification.className = `floating-notification notification-${type}`;
+        
+        const iconMap = {
+            error: 'exclamation-circle',
+            success: 'check-circle',
+            info: 'info-circle'
+        };
+        
+        const iconClass = iconMap[type] || 'info-circle';
+        
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${iconClass}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 10);
+        
+        // Auto-hide after 4 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            notification.classList.add('hide');
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
+    }
+
+    function showNotificationFromSession() {
+        try {
+            const notificationData = sessionStorage.getItem('loginNotification');
+            if (notificationData) {
+                const notification = JSON.parse(notificationData);
+                if (notification && notification.type && notification.message) {
+                    showFloatingNotification(notification.type, notification.message);
+                }
+                // Limpiar la notificación del sessionStorage
+                sessionStorage.removeItem('loginNotification');
+            }
+        } catch (error) {
+            console.warn('Error al mostrar notificación de sesión:', error);
+        }
     }
 
     // Limpiar errores al escribir

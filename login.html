@@ -279,6 +279,168 @@
             color: #bee5eb;
             border-color: #1f4c57;
         }
+
+        /* Floating Notifications */
+        .floating-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 350px;
+            background: white;
+            border-radius: 8px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            animation: slideInRight 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        .floating-notification.show {
+            opacity: 1;
+        }
+
+        .floating-notification.hide {
+            animation: slideOutRight 0.3s ease forwards;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .notification-content i {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .notification-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .notification-success i {
+            color: #28a745;
+        }
+
+        .notification-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .notification-error i {
+            color: #dc3545;
+        }
+
+        .notification-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .notification-info i {
+            color: #17a2b8;
+        }
+
+        html[data-theme="dark"] .floating-notification {
+            background: #2d3748;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        html[data-theme="dark"] .notification-success {
+            background: #1e4620;
+            color: #c3e6cb;
+            border-left-color: #28a745;
+        }
+
+        html[data-theme="dark"] .notification-success i {
+            color: #4ade80;
+        }
+
+        html[data-theme="dark"] .notification-error {
+            background: #4a1c1c;
+            color: #f5c6cb;
+            border-left-color: #dc3545;
+        }
+
+        html[data-theme="dark"] .notification-error i {
+            color: #ff6b6b;
+        }
+
+        html[data-theme="dark"] .notification-info {
+            background: #12323a;
+            color: #bee5eb;
+            border-left-color: #17a2b8;
+        }
+
+        html[data-theme="dark"] .notification-info i {
+            color: #4fa3b1;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .floating-notification {
+                top: auto;
+                bottom: 20px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                animation: slideInBottom 0.3s ease forwards;
+            }
+
+            .floating-notification.hide {
+                animation: slideOutBottom 0.3s ease forwards;
+            }
+
+            @keyframes slideInBottom {
+                from {
+                    transform: translateY(100px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutBottom {
+                from {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateY(100px);
+                    opacity: 0;
+                }
+            }
+        }
     </style>
 </head>
 <body class="no-scroll">
