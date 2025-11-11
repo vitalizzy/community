@@ -7,6 +7,63 @@ document.addEventListener('DOMContentLoaded', function() {
     const alertDiv = document.getElementById('alert');
     const submitButton = registerForm.querySelector('button[type="submit"]');
 
+    // Validar formulario en tiempo real para habilitar/deshabilitar botón
+    const requiredFields = [
+        'name',
+        'email',
+        'password',
+        'confirmPassword',
+        'bloque',
+        'portal',
+        'planta',
+        'letra',
+        'tipo',
+        'gdprAccept'
+    ];
+
+    // Función para verificar si todos los campos están completos
+    function checkFormCompletion() {
+        let allFilled = true;
+
+        for (const fieldId of requiredFields) {
+            const field = document.getElementById(fieldId);
+            
+            if (!field) continue;
+
+            if (field.type === 'checkbox') {
+                if (!field.checked) {
+                    allFilled = false;
+                    break;
+                }
+            } else {
+                const value = field.value.trim();
+                if (!value) {
+                    allFilled = false;
+                    break;
+                }
+            }
+        }
+
+        // Habilitar/deshabilitar botón según el estado
+        submitButton.disabled = !allFilled;
+    }
+
+    // Añadir listeners a todos los campos para validar en tiempo real
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            if (field.type === 'checkbox') {
+                field.addEventListener('change', checkFormCompletion);
+            } else {
+                field.addEventListener('input', checkFormCompletion);
+                field.addEventListener('change', checkFormCompletion);
+            }
+        }
+    });
+
+    // Verificación inicial
+    checkFormCompletion();
+
     // Manejar envío del formulario
     registerForm.addEventListener('submit', async function(e) {
         e.preventDefault();

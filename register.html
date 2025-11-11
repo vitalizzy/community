@@ -210,8 +210,15 @@
         }
 
         .login-btn:disabled {
-            opacity: 0.6;
+            background: #a0aec0;
+            opacity: 0.5;
             cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        html[data-theme="dark"] .login-btn:disabled {
+            background: #4a5568;
+            color: #718096;
         }
 
         .login-btn .spinner {
@@ -664,7 +671,7 @@
                     </span>
                 </div>
 
-                <button type="submit" class="login-btn" id="registerBtn">
+                <button type="submit" class="login-btn" id="registerBtn" disabled>
                     <i class="fas fa-user-plus"></i>
                     <span data-i18n="register.button">Registrarse</span>
                     <i class="fas fa-spinner spinner"></i>
