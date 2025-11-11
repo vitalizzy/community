@@ -214,23 +214,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('Usuario auth creado:', authData);
 
-            // 2. Insertar datos del propietario en la tabla
+            // Verificar que se creó el usuario
+            if (!authData.user) {
+                showAlert('error', 'Error al crear usuario. Por favor, inténtalo de nuevo.');
+                return;
+            }
+
+            // 2. Insertar datos del propietario usando la función RPC
+            // Esta función se ejecuta con privilegios elevados y no requiere sesión activa
             const { data: propietarioData, error: propietarioError } = await supabase
-                .from('propietarios')
-                .insert([
-                    {
-                        user_id: authData.user.id,
-                        nombre: formData.nombre,
-                        email: formData.email,
-                        telefono: formData.telefono,
-                        bloque: formData.bloque,
-                        portal: formData.portal,
-                        planta: formData.planta,
-                        letra: formData.letra,
-                        tipo_propietario: formData.tipo_propietario
-                    }
-                ])
-                .select();
+                .rpc('create_propietario', {
+                    p_user_id: authData.user.id,
+                    p_nombre: formData.nombre,
+                    p_email: formData.email,
+                    p_telefono: formData.telefono,
+                    p_bloque: formData.bloque,
+                    p_portal: formData.portal,
+                    p_planta: formData.planta,
+                    p_letra: formData.letra,
+                    p_tipo_propietario: formData.tipo_propietario
+                });
 
             if (propietarioError) {
                 console.error('Error al insertar propietario:', propietarioError);

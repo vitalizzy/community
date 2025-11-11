@@ -38,6 +38,13 @@
 4. Haz clic en "Run" o presiona `Ctrl + Enter`
 5. Deberías ver un mensaje de éxito
 
+### 4️⃣.1 Crear la Función de Registro
+
+1. En el mismo **SQL Editor**, crea una nueva query
+2. Copia y pega TODO el contenido del archivo `supabase-register-function.sql`
+3. Haz clic en "Run" o presiona `Ctrl + Enter`
+4. Esta función permite el registro de propietarios sin necesidad de sesión activa
+
 ### 5️⃣ Configurar Autenticación por Email
 
 1. Ve a **Authentication** → **Providers**
