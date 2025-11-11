@@ -191,29 +191,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // 2. Esperar un momento para que el usuario esté completamente registrado en auth.users
-            // (A veces hay un pequeño delay de sincronización en Supabase)
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // 2. El propietario se creará cuando el usuario confirme el email
+            // y acceda al dashboard por primera vez (en dashboard-auth.js)
+            // Por ahora, solo mostramos mensaje de confirmación
 
-            // 3. Crear propietario con datos básicos en la base de datos
-            console.log('Creando propietario en BD...');
-            const { data: propietarioData, error: propietarioError } = await supabase
-                .rpc('create_propietario', {
-                    p_user_id: authData.user.id,
-                    p_nombre: formData.nombre,
-                    p_email: formData.email,
-                    p_telefono: null
-                });
-
-            if (propietarioError) {
-                console.error('Error al crear propietario:', propietarioError);
-                showAlert('error', `Error al crear perfil: ${propietarioError.message}`);
-                return;
-            }
-
-            console.log('Propietario creado:', propietarioData);
-
-            // 4. Verificar si se requiere confirmación de email
+            // 3. Verificar si se requiere confirmación de email
             const emailConfirmationRequired = !authData.session;
 
             if (emailConfirmationRequired) {

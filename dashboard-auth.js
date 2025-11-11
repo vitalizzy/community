@@ -55,19 +55,36 @@ async function loadUserData() {
         }
 
         // Obtener datos del propietario
-        const propietarioData = await getPropietarioData(user.id);
+        let propietarioData = await getPropietarioData(user.id);
+        
+        if (!propietarioData) {
+            console.log('No existe propietario para este usuario. Creando...');
+            // El propietario no existe, crear uno con datos básicos del auth user
+            propietarioData = await createPropietarioFromAuthUser(user);
+            
+            if (!propietarioData) {
+                console.error('Error creando propietario');
+                showDataError();
+                return;
+            }
+        }
         
         if (propietarioData) {
+            // Verificar si el propietario tiene datos de vivienda completos
+            if (!propietarioData.bloque || !propietarioData.portal || !propietarioData.planta || !propietarioData.letra) {
+                console.log('Datos de vivienda incompletos, redirigiendo a onboarding...');
+                window.location.href = 'onboarding-properties.html';
+                return;
+            }
+            
             // Mostrar datos del usuario en el dashboard
             displayUserInfo(propietarioData);
             
             // Guardar en sessionStorage
             sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
         } else {
-            console.error('No se encontraron datos del propietario');
-            // Usuario existe pero no tiene datos de propietario - redirigir a onboarding
-            console.log('Redirigiendo a onboarding para agregar vivienda...');
-            window.location.href = 'onboarding-properties.html';
+            console.error('No se encontraron datos del propietario después de crear');
+            showDataError();
             return;
         }
     } catch (error) {
@@ -79,6 +96,32 @@ async function loadUserData() {
             await logout();
             window.location.href = 'login.html';
         }
+    }
+}
+
+// Crear propietario a partir de datos del usuario de auth
+async function createPropietarioFromAuthUser(user) {
+    try {
+        console.log('Creando propietario con user:', user.id);
+        
+        const { data: propietarioData, error: propietarioError } = await supabase
+            .rpc('create_propietario', {
+                p_user_id: user.id,
+                p_nombre: user.user_metadata?.nombre || user.email.split('@')[0],
+                p_email: user.email,
+                p_telefono: null
+            });
+
+        if (propietarioError) {
+            console.error('Error al crear propietario:', propietarioError);
+            return null;
+        }
+
+        console.log('Propietario creado exitosamente:', propietarioData);
+        return propietarioData;
+    } catch (error) {
+        console.error('Error inesperado creando propietario:', error);
+        return null;
     }
 }
 
