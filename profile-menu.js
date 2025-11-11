@@ -44,6 +44,7 @@ class ProfileMenu {
         this.contactForm = document.getElementById('contactForm');
         this.contactPhoneInput = document.getElementById('contactPhone');
         this.contactGdprCheckbox = document.getElementById('contactGdpr');
+        this.contactSubmitButton = this.contactForm?.querySelector('button[type="submit"]');
         this.themeToggleButton = document.getElementById('profileThemeToggle');
         this.languageToggleButton = document.getElementById('profileLanguageToggle');
         this.deleteAccountButton = document.getElementById('deleteAccountBtn');
@@ -131,6 +132,12 @@ class ProfileMenu {
             this.contactForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 await this.handleContactSubmit();
+            });
+        }
+
+        if (this.contactGdprCheckbox) {
+            this.contactGdprCheckbox.addEventListener('change', () => {
+                this.updateContactSubmitButtonState();
             });
         }
 
@@ -529,6 +536,22 @@ class ProfileMenu {
         if (this.contactGdprCheckbox) {
             this.contactGdprCheckbox.checked = Boolean(propietario.gdpr_consent);
         }
+
+        // Update button state after loading data
+        this.updateContactSubmitButtonState();
+    }
+
+    updateContactSubmitButtonState() {
+        if (!this.contactSubmitButton || !this.contactGdprCheckbox) {
+            return;
+        }
+
+        // Only enable the button if GDPR checkbox is checked
+        if (this.contactGdprCheckbox.checked) {
+            this.contactSubmitButton.removeAttribute('disabled');
+        } else {
+            this.contactSubmitButton.setAttribute('disabled', 'true');
+        }
     }
 
     async handleContactSubmit() {
@@ -536,8 +559,14 @@ class ProfileMenu {
             return;
         }
 
-        const phoneRaw = this.contactPhoneInput?.value.trim() || '';
+        // Validate that GDPR checkbox is checked
         const consent = Boolean(this.contactGdprCheckbox?.checked);
+        if (!consent) {
+            this.showMessage('error', this.t('profile.contact.gdprRequired', 'Debes aceptar la política de privacidad (GDPR)'));
+            return;
+        }
+
+        const phoneRaw = this.contactPhoneInput?.value.trim() || '';
         const sanitizedPhone = phoneRaw ? this.sanitizePhone(phoneRaw) : null;
 
         if (sanitizedPhone === false) {
