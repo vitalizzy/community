@@ -124,13 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            console.log('Login exitoso:', data);
+            console.log('Login exitoso - verificando usuario:', data);
 
             // Verificar que el usuario realmente existe en la base de datos
             const userExists = await getCurrentUser();
             if (!userExists) {
+                console.error('Usuario no existe en la base de datos');
                 showAlert('error', 'Usuario no encontrado. Por favor, contacta al administrador.');
-                await logout();
+                // Limpiar sesión sin redirigir
+                await supabase.auth.signOut();
+                sessionStorage.clear();
                 return;
             }
 
@@ -138,20 +141,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const propietarioData = await getPropietarioData(data.user.id);
             
             if (!propietarioData) {
-                console.warn('No se encontraron datos del propietario');
+                console.error('No se encontraron datos del propietario para user_id:', data.user.id);
                 showAlert('error', 'No se encontraron datos de tu perfil. Contacta al administrador.');
-                await logout();
+                // Limpiar sesión sin redirigir
+                await supabase.auth.signOut();
+                sessionStorage.clear();
                 return;
             }
 
-            // Guardar datos en sessionStorage para uso rápido
+            // TODO VALIDADO - Ahora sí proceder con el login
+            console.log('Validación completa - propietario:', propietarioData);
+
+            // Guardar datos en sessionStorage
             sessionStorage.setItem('user', JSON.stringify(data.user));
             sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
 
-            // Mostrar mensaje de éxito
+            // Mostrar mensaje de éxito SOLO cuando todo está OK
             showAlert('success', '¡Bienvenido a L2H!');
 
-            // Redirigir al dashboard
+            // Redirigir al dashboard después de 1 segundo
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
             }, 1000);
