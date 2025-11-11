@@ -16,15 +16,22 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 // Proteger el dashboard - redirigir si no está autenticado
 async function protectDashboard() {
-    const session = await checkAuth();
-    
-    if (!session) {
-        console.log('No hay sesión activa, redirigiendo al login...');
+    try {
+        const session = await checkAuth();
+        
+        if (!session) {
+            console.log('No hay sesión activa, redirigiendo al login...');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        console.log('Sesión activa:', session);
+    } catch (error) {
+        console.error('Error verificando sesión:', error);
+        // Si hay error verificando la sesión, limpiar y redirigir
+        await logout();
         window.location.href = 'login.html';
-        return;
     }
-    
-    console.log('Sesión activa:', session);
 }
 
 // Cargar datos del usuario en el dashboard
@@ -34,6 +41,9 @@ async function loadUserData() {
         
         if (!user) {
             console.error('No se pudo obtener el usuario');
+            // Usuario no existe pero hay sesión - limpiar y redirigir
+            await logout();
+            window.location.href = 'login.html';
             return;
         }
 
@@ -48,10 +58,32 @@ async function loadUserData() {
             sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
         } else {
             console.error('No se encontraron datos del propietario');
+            // Usuario existe pero no tiene datos de propietario
+            showDataError();
         }
-
     } catch (error) {
         console.error('Error cargando datos del usuario:', error);
+        
+        // Si es un error 403 (Forbidden), el usuario fue eliminado
+        if (error.message && error.message.includes('403')) {
+            console.log('Usuario eliminado o sin permisos, limpiando sesión...');
+            await logout();
+            window.location.href = 'login.html';
+        }
+    }
+}
+
+// Mostrar error cuando no hay datos de propietario
+function showDataError() {
+    const container = document.querySelector('.user-info-container');
+    if (container) {
+        container.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>No se encontraron datos de propietario para este usuario.</p>
+                <p>Por favor, contacta al administrador.</p>
+            </div>
+        `;
     }
 }
 

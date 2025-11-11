@@ -18,8 +18,27 @@ async function checkAuth() {
 
 // Función para obtener el usuario actual
 async function getCurrentUser() {
-    const { data: { user } } = await supabase.auth.getUser();
-    return user;
+    try {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        
+        if (error) {
+            console.error('Error obteniendo usuario:', error);
+            
+            // Si es error 403, el usuario fue eliminado
+            if (error.status === 403) {
+                console.log('Usuario no autorizado o eliminado');
+                // Limpiar sesión local
+                await supabase.auth.signOut();
+                return null;
+            }
+            throw error;
+        }
+        
+        return user;
+    } catch (error) {
+        console.error('Error en getCurrentUser:', error);
+        return null;
+    }
 }
 
 // Función para obtener datos del propietario
@@ -40,13 +59,26 @@ async function getPropietarioData(userId) {
 
 // Función para cerrar sesión
 async function logout() {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-        console.error('Error al cerrar sesión:', error);
+    try {
+        // Limpiar sessionStorage
+        sessionStorage.clear();
+        
+        // Cerrar sesión en Supabase
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error('Error al cerrar sesión:', error);
+        }
+        
+        // Redirigir al index
+        window.location.href = 'index.html';
+        return true;
+    } catch (error) {
+        console.error('Error en logout:', error);
+        // Aunque haya error, limpiar local y redirigir
+        sessionStorage.clear();
+        window.location.href = 'index.html';
         return false;
     }
-    window.location.href = 'index.html';
-    return true;
 }
 
 // Exportar para uso global
