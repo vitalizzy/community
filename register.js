@@ -191,7 +191,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // 2. Crear propietario con datos básicos en la base de datos
+            // 2. Esperar un momento para que el usuario esté completamente registrado en auth.users
+            // (A veces hay un pequeño delay de sincronización en Supabase)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // 3. Crear propietario con datos básicos en la base de datos
             console.log('Creando propietario en BD...');
             const { data: propietarioData, error: propietarioError } = await supabase
                 .rpc('create_propietario', {
@@ -209,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('Propietario creado:', propietarioData);
 
-            // 3. Verificar si se requiere confirmación de email
+            // 4. Verificar si se requiere confirmación de email
             const emailConfirmationRequired = !authData.session;
 
             if (emailConfirmationRequired) {

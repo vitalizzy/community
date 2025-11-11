@@ -22,7 +22,9 @@ AS $$
 DECLARE
     result JSON;
 BEGIN
-    -- Insertar el propietario con solo datos básicos
+    -- IMPORTANTE: Esta función se ejecuta con SECURITY DEFINER
+    -- Por lo que puede insertar incluso si el usuario no está autenticado o su sesión no está lista
+    
     INSERT INTO propietarios (
         user_id,
         nombre,
@@ -46,6 +48,8 @@ BEGIN
 EXCEPTION
     WHEN unique_violation THEN
         RAISE EXCEPTION 'El email o user_id ya existe';
+    WHEN foreign_key_violation THEN
+        RAISE EXCEPTION 'El usuario no existe aún en auth.users. Por favor, inténtalo de nuevo.';
     WHEN OTHERS THEN
         RAISE EXCEPTION 'Error al crear propietario: %', SQLERRM;
 END;
