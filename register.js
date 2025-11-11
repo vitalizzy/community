@@ -209,7 +209,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Mensajes de error personalizados
                 if (authError.message.includes('already registered')) {
-                    showAlert('error', 'Este correo electrónico ya está registrado');
+                    // Usuario ya existe - redirigir al login con notificación
+                    showFloatingNotification('info', 'Este correo ya está registrado. Redirigiendo al login...');
+                    setTimeout(() => {
+                        // Guardar mensaje en sessionStorage para mostrarlo en login
+                        sessionStorage.setItem('loginNotification', JSON.stringify({
+                            type: 'info',
+                            message: 'Ingresa con tu email y contraseña'
+                        }));
+                        window.location.href = 'login.html';
+                    }, 2000);
                 } else if (authError.message.includes('invalid email')) {
                     showAlert('error', 'El correo electrónico no es válido');
                 } else if (authError.message.includes('weak password')) {
@@ -333,6 +342,29 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideAlert() {
         alertDiv.className = 'alert';
         alertDiv.textContent = '';
+    }
+
+    // Función para mostrar notificaciones flotantes
+    function showFloatingNotification(type, message) {
+        const notification = document.createElement('div');
+        notification.className = `floating-notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Mostrar con animación
+        setTimeout(() => notification.classList.add('show'), 10);
+        
+        // Auto-ocultar después de 4 segundos
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
     }
 
     // Validación en tiempo real de confirmación de contraseña

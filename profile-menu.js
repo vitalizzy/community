@@ -153,10 +153,14 @@ class ProfileMenu {
 
         if (this.languageToggleButton) {
             this.languageToggleButton.addEventListener('click', () => {
-                const selectorButton = document.querySelector('#language-selector .language-selector-button');
-                if (selectorButton) {
-                    selectorButton.click();
-                    this.ensureDrawerRemainsOpen();
+                // Usar el mismo selector de idioma global
+                if (window.i18n && typeof window.i18n.createLanguageSelector === 'function') {
+                    // Si existe el selector global, simplemente hacer clic en el botón del selector
+                    const selectorButton = document.querySelector('.language-selector-button');
+                    if (selectorButton) {
+                        selectorButton.click();
+                        this.ensureDrawerRemainsOpen();
+                    }
                 }
             });
         }
