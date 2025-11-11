@@ -15,14 +15,14 @@ CREATE TABLE propietarios (
     gdpr_consent BOOLEAN DEFAULT FALSE,
     gdpr_consent_at TIMESTAMP WITH TIME ZONE,
     
-    -- Datos de ubicación del inmueble (OBLIGATORIOS)
-    bloque TEXT NOT NULL CHECK (bloque IN ('1', '2', '3', '4', '5', '6', '7', '8')),
-    portal TEXT NOT NULL CHECK (portal IN ('1', '2')),
-    planta TEXT NOT NULL CHECK (planta IN ('Bajo', '1', '2', 'Atico')),
-    letra TEXT NOT NULL CHECK (letra IN ('A', 'B', 'C')),
+    -- Datos de ubicación del inmueble (OPCIONALES - Se completan en onboarding)
+    bloque TEXT CHECK (bloque IN ('1', '2', '3', '4', '5', '6', '7', '8')),
+    portal TEXT CHECK (portal IN ('1', '2')),
+    planta TEXT CHECK (planta IN ('Bajo', '1', '2', 'Atico')),
+    letra TEXT CHECK (letra IN ('A', 'B', 'C')),
     
-    -- Tipo de propietario
-    tipo_propietario TEXT NOT NULL CHECK (tipo_propietario IN ('Dueno', 'PropertyManager', 'Inquilino')),
+    -- Tipo de propietario (OPCIONAL - Se establece en onboarding)
+    tipo_propietario TEXT CHECK (tipo_propietario IN ('Dueno', 'PropertyManager', 'Inquilino')),
     
     -- Metadatos
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -80,12 +80,12 @@ FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
 -- Comentarios en la tabla y columnas para documentación
-COMMENT ON TABLE propietarios IS 'Tabla principal de propietarios de la comunidad L2H';
-COMMENT ON COLUMN propietarios.bloque IS 'Número de bloque (1-8)';
-COMMENT ON COLUMN propietarios.portal IS 'Número de portal (1-2)';
-COMMENT ON COLUMN propietarios.planta IS 'Planta del inmueble (Bajo, 1, 2, Atico)';
-COMMENT ON COLUMN propietarios.letra IS 'Letra del inmueble (A, B, C)';
-COMMENT ON COLUMN propietarios.tipo_propietario IS 'Tipo de propietario (Dueno, PropertyManager, Inquilino)';
+COMMENT ON TABLE propietarios IS 'Tabla principal de propietarios de la comunidad L2H. Los datos de vivienda se completan en el flujo de onboarding.';
+COMMENT ON COLUMN propietarios.bloque IS 'Número de bloque (1-8) - Completado en onboarding';
+COMMENT ON COLUMN propietarios.portal IS 'Número de portal (1-2) - Completado en onboarding';
+COMMENT ON COLUMN propietarios.planta IS 'Planta del inmueble (Bajo, 1, 2, Atico) - Completado en onboarding';
+COMMENT ON COLUMN propietarios.letra IS 'Letra del inmueble (A, B, C) - Completado en onboarding';
+COMMENT ON COLUMN propietarios.tipo_propietario IS 'Tipo de propietario (Dueno, PropertyManager, Inquilino) - Completado en onboarding';
 
 -- Comentarios adicionales
 COMMENT ON COLUMN propietarios.telefono_confirmado IS 'Indica si el número de teléfono ha sido verificado manualmente.';
