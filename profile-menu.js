@@ -42,11 +42,13 @@ class ProfileMenu {
         this.neighborsList = document.getElementById('profileNeighborsList');
         this.refreshNeighborsButton = document.getElementById('refreshNeighborsBtn');
         this.contactForm = document.getElementById('contactForm');
-        this.contactPhoneInput = document.getElementById('contactPhone');
+        this.internationalPhoneContainer = document.getElementById('internationalPhoneContainer');
+        this.phoneNumberManager = null;
         this.contactGdprCheckbox = document.getElementById('contactGdpr');
         this.contactSubmitButton = this.contactForm?.querySelector('button[type="submit"]');
         this.themeToggleButton = document.getElementById('profileThemeToggle');
         this.languageToggleButton = document.getElementById('profileLanguageToggle');
+        this.changePasswordButton = document.getElementById('changePasswordBtn');
         this.deleteAccountButton = document.getElementById('deleteAccountBtn');
         this.logoutButtons = Array.from(document.querySelectorAll('.logout-btn'));
         this.avatarSmall = document.getElementById('profileAvatar');
@@ -75,7 +77,14 @@ class ProfileMenu {
 
     async init() {
         this.bindEvents();
+        this.initializePhoneNumber();
         await this.refreshData();
+    }
+
+    initializePhoneNumber() {
+        if (this.internationalPhoneContainer && typeof InternationalPhoneNumber !== 'undefined') {
+            this.phoneNumberManager = new InternationalPhoneNumber('internationalPhoneContainer');
+        }
     }
 
     bindEvents() {
@@ -162,6 +171,12 @@ class ProfileMenu {
                         this.ensureDrawerRemainsOpen();
                     }
                 }
+            });
+        }
+
+        if (this.changePasswordButton) {
+            this.changePasswordButton.addEventListener('click', () => {
+                this.handleChangePassword();
             });
         }
 
@@ -533,8 +548,8 @@ class ProfileMenu {
             return;
         }
 
-        if (this.contactPhoneInput) {
-            this.contactPhoneInput.value = propietario.telefono || '';
+        if (this.phoneNumberManager && propietario.telefono) {
+            this.phoneNumberManager.setPhoneNumber(propietario.telefono);
         }
 
         if (this.contactGdprCheckbox) {
@@ -570,10 +585,9 @@ class ProfileMenu {
             return;
         }
 
-        const phoneRaw = this.contactPhoneInput?.value.trim() || '';
-        const sanitizedPhone = phoneRaw ? this.sanitizePhone(phoneRaw) : null;
+        const phoneNumber = this.phoneNumberManager?.getFullPhoneNumber() || null;
 
-        if (sanitizedPhone === false) {
+        if (phoneNumber && !this.sanitizePhone(phoneNumber)) {
             this.showMessage('error', this.t('profile.contact.invalidPhone', 'Introduce un número de teléfono válido'));
             return;
         }
@@ -582,7 +596,7 @@ class ProfileMenu {
 
         try {
             const updatePayload = {
-                telefono: sanitizedPhone,
+                telefono: phoneNumber,
                 gdpr_consent: consent,
                 gdpr_consent_at: consent ? new Date().toISOString() : null
             };
@@ -786,5 +800,10 @@ class ProfileMenu {
             return window.i18n.translate(key) || fallback;
         }
         return fallback;
+    }
+
+    handleChangePassword() {
+        // Redirect to change-password page
+        window.location.href = 'change-password.html';
     }
 }

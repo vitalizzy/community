@@ -16,6 +16,7 @@
     
     <script src="translations.js" defer></script>
     <script src="theme.js" defer></script>
+    <script src="international-phone.js" defer></script>
     <script src="dashboard-auth.js" defer></script>
     <script src="profile-menu.js" defer></script>
     <style>
@@ -473,6 +474,65 @@
             height: 18px;
         }
 
+        /* International Phone Number Styles */
+        .international-phone-container {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .international-phone-container select,
+        .international-phone-container input {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            background: #ffffff;
+            color: #2d3748;
+        }
+
+        .international-phone-container select {
+            min-width: 200px;
+            flex-shrink: 0;
+        }
+
+        .international-phone-container input {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .phone-display {
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #718096;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+
+        html[data-theme="dark"] .international-phone-container select,
+        html[data-theme="dark"] .international-phone-container input {
+            border-color: var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+
+        html[data-theme="dark"] .phone-display {
+            color: var(--text-secondary);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 640px) {
+            .international-phone-container {
+                flex-direction: column;
+            }
+
+            .international-phone-container select,
+            .international-phone-container input {
+                width: 100%;
+            }
+        }
+
         .primary-btn,
         .secondary-btn,
         .danger-btn,
@@ -827,9 +887,9 @@
             <section class="profile-section" id="profileContactSection">
                 <h3 data-i18n="profile.contact.title">Información de contacto</h3>
                 <form id="contactForm" class="contact-form">
-                    <label for="contactPhone">
+                    <label for="internationalPhoneContainer">
                         <span data-i18n="profile.contact.phone">Teléfono</span>
-                        <input type="tel" id="contactPhone" name="phone" maxlength="25" autocomplete="tel">
+                        <div id="internationalPhoneContainer" class="international-phone-container"></div>
                     </label>
                     <label class="checkbox-field">
                         <input type="checkbox" id="contactGdpr">
@@ -860,6 +920,15 @@
                     <button class="secondary-btn" id="profileLanguageToggle">
                         <i class="fas fa-language"></i>
                         <span data-i18n="language.select">Seleccionar idioma</span>
+                    </button>
+                </div>
+                <div class="preference-row">
+                    <div>
+                        <h4 data-i18n="profile.preferences.password">Contraseña</h4>
+                    </div>
+                    <button class="secondary-btn" id="changePasswordBtn">
+                        <i class="fas fa-key"></i>
+                        <span data-i18n="profile.preferences.changePassword">Cambiar contraseña</span>
                     </button>
                 </div>
             </section>
