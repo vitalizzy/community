@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Dashboard - L2H Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-percent {
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        .stat-card.success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #333;
+        }
+
+        .stat-card.warning {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #333;
+        }
+
+        .stat-card.error {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scenario-list {
+            list-style: none;
+        }
+
+        .scenario-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-item:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .scenario-item.passed {
+            border-left-color: #84fab0;
+            background: #f0fdf4;
+        }
+
+        .scenario-item.failed {
+            border-left-color: #ff6b6b;
+            background: #fef2f2;
+        }
+
+        .scenario-item.pending {
+            border-left-color: #fbbf24;
+            background: #fffbeb;
+        }
+
+        .scenario-name {
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .scenario-status {
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e5e7eb;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: width 0.5s ease;
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 10px;
+            height: 200px;
+            margin-top: 20px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            min-height: 20px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar:hover {
+            transform: scaleY(1.1);
+        }
+
+        .chart-bar.passed {
+            background: linear-gradient(180deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .chart-bar.failed {
+            background: linear-gradient(180deg, #ff6b6b 0%, #ee5a6f 100%);
+        }
+
+        .chart-bar.pending {
+            background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .chart-label {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .button-secondary {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        .button-secondary:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .instructions {
+            background: #eff6ff;
+            border: 2px solid #93c5fd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #1e40af;
+        }
+
+        .instructions strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        .legend {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .legend-color.passed {
+            background: #84fab0;
+        }
+
+        .legend-color.failed {
+            background: #ff6b6b;
+        }
+
+        .legend-color.pending {
+            background: #fbbf24;
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 Testing Dashboard</h1>
+            <p class="subtitle">L2H Community - Sistema de Tracking de Testing</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card success">
+                    <h3>Escenarios Pasados</h3>
+                    <div class="stat-value" id="passed-count">0</div>
+                    <div class="stat-percent"><span id="passed-percent">0</span>%</div>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Con Problemas</h3>
+                    <div class="stat-value" id="problems-count">0</div>
+                    <div class="stat-percent"><span id="problems-percent">0</span>%</div>
+                </div>
+                <div class="stat-card error">
+                    <h3>No Testeados</h3>
+                    <div class="stat-value" id="pending-count">15</div>
+                    <div class="stat-percent"><span id="pending-percent">100</span>%</div>
+                </div>
+                <div class="stat-card success">
+                    <h3>Tasa de Éxito</h3>
+                    <div class="stat-value" id="success-rate">0<span style="font-size: 0.5em">%</span></div>
+                    <div class="stat-percent">Última actualización: <span id="last-update">Nunca</span></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="card">
+                <h2><span class="emoji">📊</span> Progreso General</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%">0%</div>
+                </div>
+                <p style="text-align: center; color: #666; margin: 15px 0;">
+                    <strong id="completed-scenarios">0 de 15</strong> escenarios completados
+                </p>
+                <div class="button-group">
+                    <button onclick="loadTestingReport()">📋 Ver Reporte Completo</button>
+                    <button class="button-secondary" onclick="exportData()">📥 Exportar Datos</button>
+                    <button class="button-secondary" onclick="resetData()">🔄 Reiniciar</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><span class="emoji">📈</span> Distribución de Resultados</h2>
+                <div class="chart-container">
+                    <div class="chart-bar passed" style="height: 20%" id="chart-passed">
+                        <div style="position: absolute; bottom: -25px; width: 100%;">
+                            <div class="chart-label">Pasados</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar failed" style="height: 20%" id="chart-failed">
+                        <div style="position: absolute; bottom: -25px; width: 100%;">
+                            <div class="chart-label">Fallidos</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar pending" style="height: 100%" id="chart-pending">
+                        <div style="position: absolute; bottom: -25px; width: 100%;">
+                            <div class="chart-label">Pendientes</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 50px;">
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color passed"></div>
+                            <span>Pasados</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color failed"></div>
+                            <span>Fallidos</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color pending"></div>
+                            <span>Pendientes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h2><span class="emoji">✅</span> Estado de Escenarios</h2>
+            
+            <div class="instructions">
+                <strong>ℹ️ Cómo usar este dashboard:</strong>
+                1. Abre TESTING_EXECUTION.md para instrucciones detalladas<br>
+                2. Carga testing-helper.js en la consola de tu navegador<br>
+                3. Sigue los pasos para cada escenario<br>
+                4. Haz click en cada escenario para actualizar su estado
+            </div>
+
+            <ul class="scenario-list" id="scenario-list">
+                <!-- Se llena dinámicamente con JavaScript -->
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h2><span class="emoji">🚀</span> Próximos Pasos</h2>
+            <ol style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Escenarios Base (Día 1):</strong> Enfócate en los Escenarios 1-6 primero. Estos validan el flujo principal de registro y autenticación.</li>
+                <li><strong>Escenarios de Características (Día 2):</strong> Completa los Escenarios 7-10 para validar características adicionales.</li>
+                <li><strong>Escenarios de UX (Día 3):</strong> Finaliza con los Escenarios 11-15 para verificar accesibilidad y UX.</li>
+                <li><strong>Bug Tracking:</strong> Si encuentras problemas, marca como 🟡 PROBLEMAS y documenta en TESTING_REPORT.md</li>
+                <li><strong>Re-testing:</strong> Después de corregir bugs, repite el escenario que falló</li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <p>📚 Documentación: TESTING_README.md | 📋 Escenarios: TESTING_SCENARIOS.md | 📊 Reporte: TESTING_REPORT.md</p>
+        <p>🔧 Helper JS: testing-helper.js | 🐍 Automatización: testing_automation.py</p>
+        <p style="margin-top: 20px; opacity: 0.7;">L2H Community Testing Suite v1.0</p>
+    </footer>
+
+    <script>
+        // Data structure
+        const scenarios = [
+            { id: 1, name: "Registro Nuevo Usuario + Agregar Vivienda", priority: "🔴 CRÍTICA" },
+            { id: 2, name: "Múltiples Viviendas", priority: "🔴 CRÍTICA" },
+            { id: 3, name: "Validaciones de Formulario", priority: "🔴 CRÍTICA" },
+            { id: 4, name: "Logout sin Vivienda", priority: "🔴 CRÍTICA" },
+            { id: 5, name: "Login con Vivienda", priority: "🔴 CRÍTICA" },
+            { id: 6, name: "Login sin Vivienda (Redirect)", priority: "🔴 CRÍTICA" },
+            { id: 7, name: "Cambiar Contraseña", priority: "🟡 MEDIA" },
+            { id: 8, name: "Datos de Contacto (Teléfono)", priority: "🟡 MEDIA" },
+            { id: 9, name: "Recuperar Contraseña", priority: "🟡 MEDIA" },
+            { id: 10, name: "Acceso sin Autenticación", priority: "🟡 MEDIA" },
+            { id: 11, name: "Tema e Idioma", priority: "🟢 NORMAL" },
+            { id: 12, name: "Agregar Vivienda en Perfil", priority: "🟢 NORMAL" },
+            { id: 13, name: "Ver Vecinos", priority: "🟢 NORMAL" },
+            { id: 14, name: "Eliminar Cuenta", priority: "🟢 NORMAL" },
+            { id: 15, name: "Comportamiento Móvil", priority: "🟢 NORMAL" }
+        ];
+
+        // Initialize
+        function initDashboard() {
+            loadData();
+            renderScenarios();
+            updateStats();
+        }
+
+        // Render scenarios
+        function renderScenarios() {
+            const list = document.getElementById('scenario-list');
+            list.innerHTML = '';
+            
+            scenarios.forEach(scenario => {
+                const status = getData(`scenario-${scenario.id}`, 'pending');
+                const statusEmoji = {
+                    'passed': '✅',
+                    'failed': '❌',
+                    'pending': '⏳'
+                }[status];
+
+                const li = document.createElement('li');
+                li.className = `scenario-item ${status}`;
+                li.innerHTML = `
+                    <div>
+                        <div class="scenario-name">
+                            Escenario ${scenario.id}: ${scenario.name}
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">${scenario.priority}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="button-secondary" onclick="updateScenarioStatus(${scenario.id}, 'passed')" title="Marcar como Pasado">✅</button>
+                        <button class="button-secondary" onclick="updateScenarioStatus(${scenario.id}, 'failed')" title="Marcar como Fallido">❌</button>
+                        <button class="button-secondary" onclick="updateScenarioStatus(${scenario.id}, 'pending')" title="Marcar como Pendiente">⏳</button>
+                        <span class="scenario-status">${statusEmoji}</span>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // Update scenario status
+        function updateScenarioStatus(id, status) {
+            setData(`scenario-${id}`, status);
+            renderScenarios();
+            updateStats();
+        }
+
+        // Update stats
+        function updateStats() {
+            let passed = 0, failed = 0, pending = 0;
+            
+            scenarios.forEach(scenario => {
+                const status = getData(`scenario-${scenario.id}`, 'pending');
+                if (status === 'passed') passed++;
+                else if (status === 'failed') failed++;
+                else pending++;
+            });
+
+            const total = scenarios.length;
+            const completed = passed + failed;
+            const successRate = total > 0 ? Math.round((passed / total) * 100) : 0;
+
+            // Update numbers
+            document.getElementById('passed-count').textContent = passed;
+            document.getElementById('failed-count') = failed;
+            document.getElementById('problems-count').textContent = failed;
+            document.getElementById('pending-count').textContent = pending;
+            document.getElementById('passed-percent').textContent = Math.round((passed / total) * 100);
+            document.getElementById('problems-percent').textContent = Math.round((failed / total) * 100);
+            document.getElementById('pending-percent').textContent = Math.round((pending / total) * 100);
+            document.getElementById('success-rate').textContent = successRate + '%';
+            document.getElementById('completed-scenarios').textContent = `${completed} de ${total}`;
+            document.getElementById('last-update').textContent = new Date().toLocaleString();
+
+            // Update progress bar
+            const progressPercent = Math.round((completed / total) * 100);
+            const progressFill = document.getElementById('progress-fill');
+            progressFill.style.width = progressPercent + '%';
+            progressFill.textContent = progressPercent + '%';
+
+            // Update chart
+            const chartPassed = document.getElementById('chart-passed');
+            const chartFailed = document.getElementById('chart-failed');
+            const chartPending = document.getElementById('chart-pending');
+            
+            chartPassed.style.height = (passed / total) * 100 + '%';
+            chartFailed.style.height = (failed / total) * 100 + '%';
+            chartPending.style.height = (pending / total) * 100 + '%';
+        }
+
+        // Storage functions
+        function setData(key, value) {
+            localStorage.setItem(`testing-${key}`, value);
+        }
+
+        function getData(key, defaultValue) {
+            return localStorage.getItem(`testing-${key}`) || defaultValue;
+        }
+
+        function loadData() {
+            // Data is loaded from localStorage automatically
+        }
+
+        function resetData() {
+            if (confirm('¿Estás seguro de que deseas reiniciar todos los datos de testing?')) {
+                localStorage.clear();
+                renderScenarios();
+                updateStats();
+                alert('Datos reiniciados');
+            }
+        }
+
+        function exportData() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                scenarios: {}
+            };
+
+            scenarios.forEach(scenario => {
+                data.scenarios[`Escenario ${scenario.id}`] = getData(`scenario-${scenario.id}`, 'pending');
+            });
+
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `testing-report-${new Date().getTime()}.json`;
+            a.click();
+        }
+
+        function loadTestingReport() {
+            alert('Para ver el reporte completo, abre: TESTING_REPORT.md');
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

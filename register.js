@@ -13,11 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         'email',
         'password',
         'confirmPassword',
-        'bloque',
-        'portal',
-        'planta',
-        'letra',
-        'tipo',
         'gdprAccept'
     ];
 
@@ -97,11 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
-        const bloque = document.getElementById('bloque').value;
-        const portal = document.getElementById('portal').value;
-        const planta = document.getElementById('planta').value;
-        const letra = document.getElementById('letra').value;
-        const tipo = document.getElementById('tipo').value;
         const gdprAccept = document.getElementById('gdprAccept').checked;
 
         // Validar nombre
@@ -130,32 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
-        // Validar campos de ubicación (OBLIGATORIOS)
-        if (!bloque) {
-            showAlert('error', 'Debes seleccionar el bloque');
-            return false;
-        }
-
-        if (!portal) {
-            showAlert('error', 'Debes seleccionar el portal');
-            return false;
-        }
-
-        if (!planta) {
-            showAlert('error', 'Debes seleccionar la planta');
-            return false;
-        }
-
-        if (!letra) {
-            showAlert('error', 'Debes seleccionar la letra');
-            return false;
-        }
-
-        if (!tipo) {
-            showAlert('error', 'Debes seleccionar el tipo de propietario');
-            return false;
-        }
-
         // Validar aceptación de GDPR
         if (!gdprAccept) {
             showAlert('error', 'Debes aceptar la Política de Privacidad');
@@ -171,13 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = {
             nombre: document.getElementById('name').value.trim(),
             email: document.getElementById('email').value.trim(),
-            password: document.getElementById('password').value,
-            bloque: document.getElementById('bloque').value,
-            portal: document.getElementById('portal').value,
-            planta: document.getElementById('planta').value,
-            letra: document.getElementById('letra').value,
-            tipo_propietario: document.getElementById('tipo').value,
-            telefono: document.getElementById('telefono')?.value.trim() || null
+            password: document.getElementById('password').value
         };
 
         try {
@@ -195,11 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 options: {
                     emailRedirectTo: redirectUrl,
                     data: {
-                        nombre: formData.nombre,
-                        bloque: formData.bloque,
-                        portal: formData.portal,
-                        planta: formData.planta,
-                        letra: formData.letra
+                        nombre: formData.nombre
                     }
                 }
             });
@@ -237,30 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // 2. Insertar datos del propietario usando la función RPC
-            // Esta función se ejecuta con privilegios elevados y no requiere sesión activa
-            const { data: propietarioData, error: propietarioError } = await supabase
-                .rpc('create_propietario', {
-                    p_user_id: authData.user.id,
-                    p_nombre: formData.nombre,
-                    p_email: formData.email,
-                    p_telefono: formData.telefono,
-                    p_bloque: formData.bloque,
-                    p_portal: formData.portal,
-                    p_planta: formData.planta,
-                    p_letra: formData.letra,
-                    p_tipo_propietario: formData.tipo_propietario
-                });
-
-            if (propietarioError) {
-                console.error('Error al insertar propietario:', propietarioError);
-                showAlert('error', `Error al guardar datos: ${propietarioError.message}`);
-                return;
-            }
-
-            console.log('Datos de propietario guardados:', propietarioData);
-
-            // 3. Verificar si se requiere confirmación de email
+            // 2. Verificar si se requiere confirmación de email
             const emailConfirmationRequired = !authData.session;
 
             if (emailConfirmationRequired) {
@@ -274,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 2000);
             }
             
-            // 4. Limpiar formulario
+            // 3. Limpiar formulario
             registerForm.reset();
 
         } catch (error) {
