@@ -5,10 +5,44 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const alertDiv = document.getElementById('alert');
-    const submitButton = loginForm.querySelector('button[type="submit"]');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitButton = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
+
+    // Abort if the form cannot operate correctly.
+    if (!loginForm || !alertDiv || !submitButton || !emailInput || !passwordInput) {
+        console.error('Login: elementos requeridos no encontrados. Abortando inicialización.');
+        return;
+    }
+
+    const supabaseClient = window.supabaseClient ?? (typeof supabase !== 'undefined' ? supabase : null);
+    const authHelpers = {
+        checkAuth: typeof window.checkAuth === 'function' ? window.checkAuth : null,
+        getCurrentUser: typeof window.getCurrentUser === 'function' ? window.getCurrentUser : null,
+        getPropietarioData: typeof window.getPropietarioData === 'function' ? window.getPropietarioData : null,
+        logout: typeof window.logout === 'function' ? window.logout : null
+    };
+
+    const missingHelpers = Object.entries(authHelpers)
+        .filter(([, fn]) => typeof fn !== 'function')
+        .map(([name]) => name);
+
+    if (!supabaseClient || missingHelpers.length) {
+        console.error('Login: dependencias faltantes ->', {
+            supabaseDisponible: Boolean(supabaseClient),
+            helpersFaltantes: missingHelpers
+        });
+        showAlert('error', 'Servicio de autenticación no disponible. Inténtalo más tarde.');
+        return;
+    }
+
+    const { checkAuth, getCurrentUser, getPropietarioData, logout } = authHelpers;
 
     // Verificar si hay un token de confirmación de email en la URL
-    handleEmailConfirmation();
+    handleEmailConfirmation().catch(error => {
+        console.error('Error procesando confirmación de email:', error);
+        showAlert('error', 'No se pudo validar el enlace de confirmación. Inicia sesión manualmente.');
+    });
 
     // Verificar si el usuario ya está autenticado
     checkIfAlreadyLoggedIn();
@@ -21,8 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
         hideAlert();
         
         // Obtener datos del formulario
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
 
         // Validar campos
         if (!email || !password) {
@@ -60,9 +94,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // La sesión ya debería estar activa, redirigir al dashboard
             setTimeout(async () => {
-                const { data: { user } } = await supabase.auth.getUser();
-                if (user) {
-                    window.location.href = 'dashboard.html';
+                try {
+                    const { data, error } = await supabaseClient.auth.getUser();
+                    if (error) {
+                        console.error('Confirmación: error recuperando usuario:', error);
+                        showAlert('error', 'No se pudo verificar tu sesión. Inicia sesión manualmente.');
+                        return;
+                    }
+                    if (data?.user) {
+                        window.location.href = 'dashboard.html';
+                    }
+                } catch (err) {
+                    console.error('Confirmación: error inesperado al redirigir:', err);
                 }
             }, 2000);
         } else if (type === 'recovery') {
@@ -99,22 +142,15 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loginUser(email, password) {
         try {
             // Intentar iniciar sesión con Supabase Auth
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password
             });
 
             if (error) {
                 console.error('Error en signInWithPassword:', error);
-                
-                // Mensajes de error personalizados
-                if (error.message.includes('Invalid login credentials')) {
-                    showAlert('error', 'Correo electrónico o contraseña incorrectos');
-                } else if (error.message.includes('Email not confirmed')) {
-                    showAlert('error', 'Por favor, confirma tu correo electrónico antes de iniciar sesión');
-                } else {
-                    showAlert('error', `Error al iniciar sesión: ${error.message}`);
-                }
+                const userMessage = mapAuthErrorToMessage(error);
+                showAlert('error', userMessage);
                 return; // IMPORTANTE: Detener ejecución aquí
             }
 
@@ -132,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Usuario no existe en la base de datos');
                 showAlert('error', 'Usuario no encontrado. Por favor, contacta al administrador.');
                 // Limpiar sesión sin redirigir
-                await supabase.auth.signOut();
-                sessionStorage.clear();
+                await supabaseClient.auth.signOut();
+                clearSessionData();
                 return;
             }
 
@@ -144,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('No se encontraron datos del propietario para user_id:', data.user.id);
                 showAlert('error', 'No se encontraron datos de tu perfil. Contacta al administrador.');
                 // Limpiar sesión sin redirigir
-                await supabase.auth.signOut();
-                sessionStorage.clear();
+                await supabaseClient.auth.signOut();
+                clearSessionData();
                 return;
             }
 
@@ -153,8 +189,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Validación completa - propietario:', propietarioData);
 
             // Guardar datos en sessionStorage
-            sessionStorage.setItem('user', JSON.stringify(data.user));
-            sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
+            try {
+                sessionStorage.setItem('user', JSON.stringify(data.user));
+                sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
+            } catch (storageError) {
+                console.warn('No se pudieron almacenar los datos en sessionStorage:', storageError);
+            }
 
             // Mostrar mensaje de éxito SOLO cuando todo está OK
             showAlert('success', '¡Bienvenido a L2H!');
@@ -172,21 +212,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funciones auxiliares para mostrar/ocultar alertas
     function showAlert(type, message) {
+        if (!alertDiv) {
+            console.warn('No se pudo mostrar la alerta porque el contenedor no existe.');
+            return;
+        }
+
+        const alertTypes = {
+            success: 'alert-success',
+            error: 'alert-error',
+            info: 'alert-info'
+        };
+
+        const normalizedType = alertTypes[type] ? type : 'error';
         alertDiv.textContent = message;
-        alertDiv.className = `alert alert-${type} show`;
+        alertDiv.className = `alert ${alertTypes[normalizedType]} show`;
         
-        // Auto-ocultar después de 5 segundos para mensajes de error
-        if (type === 'error') {
+        if (normalizedType === 'error') {
             setTimeout(hideAlert, 5000);
         }
     }
 
     function hideAlert() {
+        if (!alertDiv) {
+            return;
+        }
         alertDiv.className = 'alert';
         alertDiv.textContent = '';
     }
 
     // Limpiar errores al escribir
-    document.getElementById('email').addEventListener('input', hideAlert);
-    document.getElementById('password').addEventListener('input', hideAlert);
+    emailInput.addEventListener('input', hideAlert);
+    passwordInput.addEventListener('input', hideAlert);
+
+    function clearSessionData() {
+        try {
+            sessionStorage.clear();
+        } catch (storageError) {
+            console.warn('No se pudo limpiar sessionStorage:', storageError);
+        }
+    }
+
+    function mapAuthErrorToMessage(error) {
+        if (!error) {
+            return 'No se pudo iniciar sesión. Inténtalo nuevamente.';
+        }
+
+        const rawMessage = (error.message || '').toLowerCase();
+        const status = error.status;
+
+        if (rawMessage.includes('invalid login credentials') || status === 400) {
+            return 'Correo electrónico o contraseña incorrectos';
+        }
+
+        if (rawMessage.includes('email not confirmed')) {
+            return 'Por favor, confirma tu correo electrónico antes de iniciar sesión';
+        }
+
+        if (rawMessage.includes('identity is blocked') || rawMessage.includes('account is blocked')) {
+            return 'Tu cuenta está temporalmente bloqueada. Revisa tu correo o contacta al administrador.';
+        }
+
+        if (rawMessage.includes('over request rate limit') || rawMessage.includes('rate limit')) {
+            return 'Demasiados intentos. Espera un momento antes de volver a intentarlo.';
+        }
+
+        if (error.code === '429' || status === 429) {
+            return 'Demasiados intentos en poco tiempo. Intenta de nuevo más tarde.';
+        }
+
+        return 'No se pudo iniciar sesión. Inténtalo nuevamente más tarde.';
+    }
 });

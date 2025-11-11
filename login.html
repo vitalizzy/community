@@ -256,6 +256,12 @@
             border: 1px solid #f5c6cb;
         }
 
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
         html[data-theme="dark"] .alert-success {
             background: #1e4620;
             color: #c3e6cb;
@@ -266,6 +272,12 @@
             background: #4a1c1c;
             color: #f5c6cb;
             border-color: #6b2828;
+        }
+
+        html[data-theme="dark"] .alert-info {
+            background: #12323a;
+            color: #bee5eb;
+            border-color: #1f4c57;
         }
     </style>
 </head>
@@ -328,60 +340,6 @@
         </div>
     </div>
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
-        const loginBtn = document.getElementById('loginBtn');
-        const alert = document.getElementById('alert');
-
-        function showAlert(message, type) {
-            alert.className = `alert alert-${type} show`;
-            alert.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                <span>${message}</span>
-            `;
-            setTimeout(() => {
-                alert.classList.remove('show');
-            }, 5000);
-        }
-
-        function setLoading(isLoading) {
-            loginBtn.disabled = isLoading;
-            if (isLoading) {
-                loginBtn.classList.add('loading');
-            } else {
-                loginBtn.classList.remove('loading');
-            }
-        }
-
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Reset errors
-            document.querySelectorAll('.form-error').forEach(error => {
-                error.classList.remove('show');
-            });
-            
-            if (!email || !password) {
-                showAlert(i18n ? i18n.translate('login.error.required') : 'Por favor completa todos los campos', 'error');
-                return;
-            }
-            
-            // Simular proceso de login
-            setLoading(true);
-            
-            setTimeout(() => {
-                console.log('Intento de login con:', email);
-                showAlert(i18n ? i18n.translate('login.success') : 'Inicio de sesión exitoso', 'success');
-                
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1000);
-            }, 1500);
-        });
-    </script>
 </body>
 </html>
 

@@ -61,7 +61,7 @@ async function getPropietarioData(userId) {
 async function logout() {
     try {
         // Limpiar sessionStorage
-        sessionStorage.clear();
+        safeClearSessionStorage();
         
         // Cerrar sesión en Supabase
         const { error } = await supabase.auth.signOut();
@@ -75,9 +75,17 @@ async function logout() {
     } catch (error) {
         console.error('Error en logout:', error);
         // Aunque haya error, limpiar local y redirigir
-        sessionStorage.clear();
+        safeClearSessionStorage();
         window.location.href = 'index.html';
         return false;
+    }
+}
+
+function safeClearSessionStorage() {
+    try {
+        sessionStorage.clear();
+    } catch (storageError) {
+        console.warn('No se pudo limpiar sessionStorage:', storageError);
     }
 }
 
