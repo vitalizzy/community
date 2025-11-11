@@ -460,6 +460,170 @@
             width: 100%;
             background: #28a745;
         }
+
+        /* Estilos para mensaje de verificación de email */
+        .email-verification-message {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .verification-icon {
+            font-size: 72px;
+            color: #667eea;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        html[data-theme="dark"] .verification-icon {
+            color: #60a5fa;
+        }
+
+        .email-verification-message h2 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        html[data-theme="dark"] .email-verification-message h2 {
+            color: var(--text-primary);
+        }
+
+        .verification-text {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        html[data-theme="dark"] .verification-text {
+            color: var(--text-secondary);
+        }
+
+        .verification-text strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        html[data-theme="dark"] .verification-text strong {
+            color: #60a5fa;
+        }
+
+        .verification-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 32px 0;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .verification-steps .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        html[data-theme="dark"] .verification-steps .step {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .verification-steps .step:hover {
+            background: #edf2f7;
+            transform: translateX(4px);
+        }
+
+        html[data-theme="dark"] .verification-steps .step:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .verification-steps .step i {
+            color: #28a745;
+            font-size: 20px;
+        }
+
+        .verification-steps .step span {
+            color: #4a5568;
+            font-size: 15px;
+        }
+
+        html[data-theme="dark"] .verification-steps .step span {
+            color: var(--text-secondary);
+        }
+
+        .verification-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 4px;
+            color: #856404;
+            font-size: 14px;
+            margin: 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        html[data-theme="dark"] .verification-note {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border-left-color: #ffc107;
+        }
+
+        .btn-back-login {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+
+        .btn-back-login:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>

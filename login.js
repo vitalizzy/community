@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const alertDiv = document.getElementById('alert');
     const submitButton = loginForm.querySelector('button[type="submit"]');
 
+    // Verificar si hay un token de confirmación de email en la URL
+    handleEmailConfirmation();
+
     // Verificar si el usuario ya está autenticado
     checkIfAlreadyLoggedIn();
 
@@ -41,6 +44,31 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.classList.remove('loading');
         }
     });
+
+    // Manejar confirmación de email desde el link
+    async function handleEmailConfirmation() {
+        // Verificar si hay parámetros de confirmación en la URL
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        const accessToken = hashParams.get('access_token');
+        const type = hashParams.get('type');
+
+        if (accessToken && type === 'signup') {
+            showAlert('success', '✅ Email confirmado correctamente. Redirigiendo al dashboard...');
+            
+            // Limpiar la URL
+            window.history.replaceState(null, '', window.location.pathname);
+            
+            // La sesión ya debería estar activa, redirigir al dashboard
+            setTimeout(async () => {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    window.location.href = 'dashboard.html';
+                }
+            }, 2000);
+        } else if (type === 'recovery') {
+            showAlert('info', 'Recuperación de contraseña. Introduce tu nueva contraseña.');
+        }
+    }
 
     // Verificar si ya hay sesión activa
     async function checkIfAlreadyLoggedIn() {

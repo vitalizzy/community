@@ -54,6 +54,45 @@
    - ✅ Enable email signups (permitir registros)
    - Template de confirmación: usar el predeterminado
 
+### 5️⃣.1 Configurar URLs de Redirección
+
+**IMPORTANTE**: Configura esto para que la confirmación de email redirija correctamente.
+
+1. Ve a **Authentication** → **URL Configuration**
+2. Configura las siguientes URLs según tu entorno:
+
+   **Para desarrollo local (Live Server - VS Code):**
+   
+   **Site URL**: 
+   ```
+   http://localhost:5500
+   ```
+   
+   **Redirect URLs** (añade todas):
+   ```
+   http://localhost:5500/**
+   http://127.0.0.1:5500/**
+   http://localhost:5500/login.html
+   http://127.0.0.1:5500/login.html
+   ```
+
+   **Para producción:**
+   
+   **Site URL**: 
+   ```
+   https://tu-dominio.com
+   ```
+   
+   **Redirect URLs**:
+   ```
+   https://tu-dominio.com/**
+   https://tu-dominio.com/login.html
+   ```
+
+3. Haz clic en **Save**
+
+> **💡 Tip**: Cuando el usuario se registre, verá un mensaje en pantalla pidiéndole que verifique su email. Después de hacer clic en el enlace del correo, será redirigido a `login.html` automáticamente.
+
 ### 6️⃣ Verificar Políticas de Seguridad (RLS)
 
 1. Ve a **Database** → **Tables** → **propietarios**

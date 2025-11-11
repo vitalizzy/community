@@ -186,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 email: formData.email,
                 password: formData.password,
                 options: {
+                    emailRedirectTo: `${window.location.origin}/login.html`,
                     data: {
                         nombre: formData.nombre,
                         bloque: formData.bloque,
@@ -243,21 +244,72 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('Datos de propietario guardados:', propietarioData);
 
-            // 3. Mostrar mensaje de éxito
-            showAlert('success', '¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.');
+            // 3. Verificar si se requiere confirmación de email
+            const emailConfirmationRequired = !authData.session;
+
+            if (emailConfirmationRequired) {
+                // Mostrar mensaje de verificación de email
+                showEmailVerificationMessage(formData.email);
+            } else {
+                // Si no requiere confirmación, redirigir directamente
+                showAlert('success', '¡Registro exitoso! Redirigiendo al dashboard...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            }
             
             // 4. Limpiar formulario
             registerForm.reset();
-
-            // 5. Redirigir al login después de 3 segundos
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 3000);
 
         } catch (error) {
             console.error('Error inesperado:', error);
             showAlert('error', 'Error inesperado. Por favor, inténtalo de nuevo.');
         }
+    }
+
+    // Mostrar mensaje de verificación de email
+    function showEmailVerificationMessage(email) {
+        // Ocultar el formulario
+        registerForm.style.display = 'none';
+
+        // Crear mensaje de verificación
+        const verificationMessage = document.createElement('div');
+        verificationMessage.className = 'email-verification-message';
+        verificationMessage.innerHTML = `
+            <div class="verification-icon">
+                <i class="fas fa-envelope-circle-check"></i>
+            </div>
+            <h2>📧 Verifica tu correo electrónico</h2>
+            <p class="verification-text">
+                Hemos enviado un correo de confirmación a:<br>
+                <strong>${email}</strong>
+            </p>
+            <div class="verification-steps">
+                <div class="step">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Abre tu bandeja de entrada</span>
+                </div>
+                <div class="step">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Busca el email de L2H Community</span>
+                </div>
+                <div class="step">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Haz clic en el enlace de confirmación</span>
+                </div>
+            </div>
+            <p class="verification-note">
+                <i class="fas fa-info-circle"></i>
+                Si no recibes el correo en unos minutos, revisa tu carpeta de spam
+            </p>
+            <a href="login.html" class="btn-back-login">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio de sesión
+            </a>
+        `;
+
+        // Insertar después del formulario
+        registerForm.parentElement.appendChild(verificationMessage);
     }
 
     // Funciones auxiliares para mostrar/ocultar alertas
