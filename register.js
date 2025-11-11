@@ -191,7 +191,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // 2. Verificar si se requiere confirmación de email
+            // 2. Crear propietario con datos básicos en la base de datos
+            console.log('Creando propietario en BD...');
+            const { data: propietarioData, error: propietarioError } = await supabase
+                .rpc('create_propietario', {
+                    p_user_id: authData.user.id,
+                    p_nombre: formData.nombre,
+                    p_email: formData.email,
+                    p_telefono: null
+                });
+
+            if (propietarioError) {
+                console.error('Error al crear propietario:', propietarioError);
+                showAlert('error', `Error al crear perfil: ${propietarioError.message}`);
+                return;
+            }
+
+            console.log('Propietario creado:', propietarioData);
+
+            // 3. Verificar si se requiere confirmación de email
             const emailConfirmationRequired = !authData.session;
 
             if (emailConfirmationRequired) {
