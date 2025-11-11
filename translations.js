@@ -138,7 +138,36 @@ class TranslationManager {
                 'language.es': 'Español',
                 'language.en': 'English',
                 'language.fr': 'Français',
-                'language.de': 'Deutsch'
+                'language.de': 'Deutsch',
+                
+                // Password Recovery
+                'password.recovery.title': 'Recuperar Contraseña',
+                'password.recovery.subtitle': 'Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña',
+                'password.recovery.send': 'Enviar enlace',
+                'password.recovery.success': '¡Correo Enviado!',
+                'password.recovery.checkEmail': 'Revisa tu bandeja de entrada y haz clic en el enlace para restablecer tu contraseña.',
+                'password.recovery.expireTime': 'El enlace expira en 24 horas.',
+                
+                // Password Change
+                'password.change.title': 'Cambiar Contraseña',
+                'password.change.subtitle': 'Actualiza tu contraseña de forma segura',
+                'password.change.newPassword': 'Nueva Contraseña',
+                'password.change.button': 'Cambiar Contraseña',
+                'password.req.length': 'Mínimo 8 caracteres',
+                'password.req.uppercase': 'Una mayúscula',
+                'password.req.lowercase': 'Una minúscula',
+                'password.req.number': 'Un número',
+                
+                // Password Reset
+                'password.reset.success': '¡Contraseña Restablecida!',
+                'password.reset.message': 'Tu contraseña ha sido actualizada exitosamente. Serás redirigido a la página de inicio de sesión.',
+                'password.error.mismatch': 'Las contraseñas no coinciden',
+                'password.error.weak': 'La contraseña no cumple con los requisitos de seguridad',
+                'password.error.same': 'La nueva contraseña debe ser diferente a la contraseña actual',
+                'password.recovery.invalidToken': 'El enlace de recuperación es inválido o ha expirado. Por favor solicita uno nuevo.',
+                'password.strength.weak': 'Fortaleza de Contraseña: Débil',
+                'password.strength.medium': 'Fortaleza de Contraseña: Media',
+                'password.strength.strong': 'Fortaleza de Contraseña: Fuerte'
             },
             en: {
                 // Main page (index.html)
@@ -276,7 +305,36 @@ class TranslationManager {
                 'language.es': 'Español',
                 'language.en': 'English',
                 'language.fr': 'Français',
-                'language.de': 'Deutsch'
+                'language.de': 'Deutsch',
+                
+                // Password Recovery
+                'password.recovery.title': 'Reset Password',
+                'password.recovery.subtitle': 'Enter your email address and we will send you a link to reset your password',
+                'password.recovery.send': 'Send link',
+                'password.recovery.success': 'Email Sent!',
+                'password.recovery.checkEmail': 'Check your inbox and click the link to reset your password.',
+                'password.recovery.expireTime': 'The link expires in 24 hours.',
+                
+                // Password Change
+                'password.change.title': 'Change Password',
+                'password.change.subtitle': 'Update your password securely',
+                'password.change.newPassword': 'New Password',
+                'password.change.button': 'Change Password',
+                'password.req.length': 'Minimum 8 characters',
+                'password.req.uppercase': 'One uppercase letter',
+                'password.req.lowercase': 'One lowercase letter',
+                'password.req.number': 'One number',
+                
+                // Password Reset
+                'password.reset.success': 'Password Reset Successful!',
+                'password.reset.message': 'Your password has been successfully updated. You will be redirected to the login page.',
+                'password.error.mismatch': 'Passwords do not match',
+                'password.error.weak': 'Password does not meet security requirements',
+                'password.error.same': 'New password must be different from current password',
+                'password.recovery.invalidToken': 'The recovery link is invalid or has expired. Please request a new one.',
+                'password.strength.weak': 'Password Strength: Weak',
+                'password.strength.medium': 'Password Strength: Medium',
+                'password.strength.strong': 'Password Strength: Strong'
             },
             fr: {
                 // Page principale (index.html)
@@ -405,7 +463,7 @@ class TranslationManager {
                 'message.success': 'Opération réussie',
                 
                 // Thème
-                'theme.toggle': 'Changer de thème',
+                'theme.toggle': 'Basculer le thème',
                 'theme.light': 'Thème clair',
                 'theme.dark': 'Thème sombre',
                 
@@ -414,7 +472,36 @@ class TranslationManager {
                 'language.es': 'Español',
                 'language.en': 'English',
                 'language.fr': 'Français',
-                'language.de': 'Deutsch'
+                'language.de': 'Deutsch',
+                
+                // Récupération de mot de passe
+                'password.recovery.title': 'Réinitialiser le mot de passe',
+                'password.recovery.subtitle': 'Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe',
+                'password.recovery.send': 'Envoyer le lien',
+                'password.recovery.success': 'Email envoyé!',
+                'password.recovery.checkEmail': 'Vérifiez votre boîte de réception et cliquez sur le lien pour réinitialiser votre mot de passe.',
+                'password.recovery.expireTime': 'Le lien expire dans 24 heures.',
+                
+                // Changement de mot de passe
+                'password.change.title': 'Changer le mot de passe',
+                'password.change.subtitle': 'Mettez à jour votre mot de passe en toute sécurité',
+                'password.change.newPassword': 'Nouveau mot de passe',
+                'password.change.button': 'Changer le mot de passe',
+                'password.req.length': 'Minimum 8 caractères',
+                'password.req.uppercase': 'Une lettre majuscule',
+                'password.req.lowercase': 'Une lettre minuscule',
+                'password.req.number': 'Un chiffre',
+                
+                // Réinitialisation du mot de passe
+                'password.reset.success': 'Réinitialisation du mot de passe réussie!',
+                'password.reset.message': 'Votre mot de passe a été mis à jour avec succès. Vous serez redirigé vers la page de connexion.',
+                'password.error.mismatch': 'Les mots de passe ne correspondent pas',
+                'password.error.weak': 'Le mot de passe ne respecte pas les exigences de sécurité',
+                'password.error.same': 'Le nouveau mot de passe doit être différent du mot de passe actuel',
+                'password.recovery.invalidToken': 'Le lien de récupération est invalide ou a expiré. Veuillez en demander un nouveau.',
+                'password.strength.weak': 'Force du mot de passe: Faible',
+                'password.strength.medium': 'Force du mot de passe: Moyen',
+                'password.strength.strong': 'Force du mot de passe: Fort'
             },
             de: {
                 // Hauptseite (index.html)
@@ -552,7 +639,36 @@ class TranslationManager {
                 'language.es': 'Español',
                 'language.en': 'English',
                 'language.fr': 'Français',
-                'language.de': 'Deutsch'
+                'language.de': 'Deutsch',
+                
+                // Passwort-Wiederherstellung
+                'password.recovery.title': 'Passwort zurücksetzen',
+                'password.recovery.subtitle': 'Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts',
+                'password.recovery.send': 'Link senden',
+                'password.recovery.success': 'E-Mail versendet!',
+                'password.recovery.checkEmail': 'Überprüfen Sie Ihren Posteingang und klicken Sie auf den Link, um Ihr Passwort zurückzusetzen.',
+                'password.recovery.expireTime': 'Der Link läuft in 24 Stunden ab.',
+                
+                // Passwort ändern
+                'password.change.title': 'Passwort ändern',
+                'password.change.subtitle': 'Aktualisieren Sie Ihr Passwort sicher',
+                'password.change.newPassword': 'Neues Passwort',
+                'password.change.button': 'Passwort ändern',
+                'password.req.length': 'Mindestens 8 Zeichen',
+                'password.req.uppercase': 'Ein Großbuchstabe',
+                'password.req.lowercase': 'Ein Kleinbuchstabe',
+                'password.req.number': 'Eine Ziffer',
+                
+                // Passwort-Rücksetzung
+                'password.reset.success': 'Passwort-Rücksetzung erfolgreich!',
+                'password.reset.message': 'Ihr Passwort wurde erfolgreich aktualisiert. Sie werden zur Anmeldeseite weitergeleitet.',
+                'password.error.mismatch': 'Passwörter stimmen nicht überein',
+                'password.error.weak': 'Passwort erfüllt nicht die Sicherheitsanforderungen',
+                'password.error.same': 'Das neue Passwort muss sich vom aktuellen Passwort unterscheiden',
+                'password.recovery.invalidToken': 'Der Wiederherstellungslink ist ungültig oder abgelaufen. Bitte fordern Sie einen neuen an.',
+                'password.strength.weak': 'Passwort-Sicherheit: Schwach',
+                'password.strength.medium': 'Passwort-Sicherheit: Mittel',
+                'password.strength.strong': 'Passwort-Sicherheit: Stark'
             }
         };
         

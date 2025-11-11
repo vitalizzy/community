@@ -230,6 +230,89 @@ Devuelve todos los vecinos registrados en las viviendas del usuario actual.
 
 ---
 
+## 🔐 Recuperación de Contraseña
+
+### Flujo de Recuperación
+
+L2H implementa un flujo seguro de recuperación de contraseña usando **Supabase Auth**:
+
+#### Página: `forgot-password.html`
+**Propósito**: Solicitar un link de recuperación de contraseña
+
+**Flujo del Usuario:**
+1. Usuario ingresa su email
+2. Hace clic en "Send link" / "Enviar enlace"
+3. Supabase envía un email con link de recuperación (válido 24 horas)
+4. Usuario ve mensaje de confirmación: "Check your inbox and click the link to reset your password"
+
+**Integración Backend:**
+```javascript
+// En forgot-password.js
+await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://tu-dominio.com/reset-password.html'
+});
+```
+
+**Validaciones:**
+- Email en formato válido
+- Usuario existe en la base de datos
+- Manejo de límite de tasa (rate limiting) de Supabase
+- Mensajes de error amigables en 4 idiomas (ES/EN/FR/DE)
+
+#### Página: `reset-password.html` (próxima)
+**Propósito**: Permitir al usuario establecer una nueva contraseña
+
+**Flujo:**
+1. Usuario recibe email con link que incluye token de recuperación
+2. Link redirige a reset-password.html con token en URL
+3. Usuario ingresa nueva contraseña
+4. Se valida con Supabase `auth.updateUser({password: newPassword})`
+5. Contraseña se actualiza y user se redirige a login
+
+**Nota**: Este archivo aún no está creado, será generado en siguientes fases
+
+### Página: `change-password.html`
+**Propósito**: Permitir que usuarios autenticados cambien su contraseña
+
+**Flujo del Usuario:**
+1. Usuario navega a change-password.html (página protegida, requiere sesión activa)
+2. Ingresa nueva contraseña
+3. Confirmador de requisitos en tiempo real:
+   - ✓ Mínimo 8 caracteres
+   - ✓ Una letra mayúscula
+   - ✓ Una letra minúscula
+   - ✓ Un número
+4. Barra de fortaleza visual (débil/media/fuerte)
+5. Confirma contraseña en segundo campo
+6. Hace clic en "Change Password" / "Cambiar Contraseña"
+
+**Integración Backend:**
+```javascript
+// En change-password.js
+await supabaseClient.auth.updateUser({
+    password: newPassword
+});
+```
+
+**Validaciones:**
+- Autenticación verificada en cargar página
+- Contraseña cumple 4 requisitos mínimos
+- Ambos campos de contraseña coinciden
+- Manejo de errores (sesión expirada, fallo de API)
+- Feedback visual en tiempo real (4 idiomas)
+
+### Seguridad del Flujo
+
+**Implementado:**
+- ✅ Links de recuperación válidos solo 24 horas
+- ✅ Supabase genera tokens con expiración automática
+- ✅ Cambio de contraseña requiere sesión autenticada
+- ✅ Contraseñas hasheadas con bcrypt por Supabase
+- ✅ Validación de requisitos en frontend + backend
+- ✅ Manejo de rate limiting para prevenir fuerza bruta
+
+---
+
 ## 🔐 Seguridad
 
 - ✅ Row Level Security (RLS) habilitado
