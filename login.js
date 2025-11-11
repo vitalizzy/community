@@ -72,9 +72,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Verificar si ya hay sesión activa
     async function checkIfAlreadyLoggedIn() {
-        const session = await checkAuth();
-        if (session) {
-            window.location.href = 'dashboard.html';
+        try {
+            const session = await checkAuth();
+            if (!session) {
+                return; // No hay sesión, continuar normal
+            }
+
+            // Verificar que el usuario realmente existe
+            const user = await getCurrentUser();
+            if (user) {
+                // Usuario válido con sesión activa, redirigir
+                window.location.href = 'dashboard.html';
+            } else {
+                // Sesión existe pero usuario no válido, limpiar
+                console.log('Sesión inválida detectada, limpiando...');
+                await logout();
+            }
+        } catch (error) {
+            console.error('Error verificando sesión:', error);
+            // Si hay error, limpiar sesión por seguridad
+            await logout();
         }
     }
 
@@ -98,24 +115,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     showAlert('error', `Error al iniciar sesión: ${error.message}`);
                 }
+                return; // IMPORTANTE: Detener ejecución aquí
+            }
+
+            // Verificar que tenemos usuario y sesión válidos
+            if (!data || !data.user || !data.session) {
+                showAlert('error', 'Error al iniciar sesión. No se pudo crear la sesión.');
                 return;
             }
 
             console.log('Login exitoso:', data);
+
+            // Verificar que el usuario realmente existe en la base de datos
+            const userExists = await getCurrentUser();
+            if (!userExists) {
+                showAlert('error', 'Usuario no encontrado. Por favor, contacta al administrador.');
+                await logout();
+                return;
+            }
 
             // Obtener datos adicionales del propietario
             const propietarioData = await getPropietarioData(data.user.id);
             
             if (!propietarioData) {
                 console.warn('No se encontraron datos del propietario');
-                showAlert('warning', 'Sesión iniciada, pero no se encontraron datos de perfil');
+                showAlert('error', 'No se encontraron datos de tu perfil. Contacta al administrador.');
+                await logout();
+                return;
             }
 
             // Guardar datos en sessionStorage para uso rápido
             sessionStorage.setItem('user', JSON.stringify(data.user));
-            if (propietarioData) {
-                sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
-            }
+            sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
 
             // Mostrar mensaje de éxito
             showAlert('success', '¡Bienvenido a L2H!');
@@ -126,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1000);
 
         } catch (error) {
-            console.error('Error inesperado:', error);
+            console.error('Error inesperado en loginUser:', error);
             showAlert('error', 'Error inesperado. Por favor, inténtalo de nuevo.');
         }
     }
