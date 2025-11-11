@@ -5,13 +5,18 @@
 
 document.addEventListener('DOMContentLoaded', async function() {
     // Verificar autenticación
-    await protectDashboard();
+    const isAuthenticated = await protectDashboard();
     
-    // Cargar datos del usuario
-    await loadUserData();
-    
-    // Configurar botón de logout
-    setupLogoutButton();
+    if (isAuthenticated) {
+        // Quitar clase loading para mostrar contenido
+        document.body.classList.remove('loading');
+        
+        // Cargar datos del usuario
+        await loadUserData();
+        
+        // Configurar botón de logout
+        setupLogoutButton();
+    }
 });
 
 // Proteger el dashboard - redirigir si no está autenticado
@@ -22,15 +27,17 @@ async function protectDashboard() {
         if (!session) {
             console.log('No hay sesión activa, redirigiendo al login...');
             window.location.href = 'login.html';
-            return;
+            return false;
         }
         
         console.log('Sesión activa:', session);
+        return true;
     } catch (error) {
         console.error('Error verificando sesión:', error);
         // Si hay error verificando la sesión, limpiar y redirigir
         await logout();
         window.location.href = 'login.html';
+        return false;
     }
 }
 
