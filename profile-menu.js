@@ -497,12 +497,6 @@ class ProfileMenu {
             card.appendChild(propTitle);
 
             others.forEach(entry => {
-                const neighborContainer = document.createElement('div');
-                neighborContainer.className = 'neighbor-item';
-
-                const infoDiv = document.createElement('div');
-                infoDiv.className = 'neighbor-info';
-
                 const name = document.createElement('h4');
                 name.textContent = `${entry.nombre}`;
 
@@ -510,19 +504,8 @@ class ProfileMenu {
                 const ownerTypeLabel = this.translateOwnerType(entry.tipo_propietario);
                 details.textContent = `${entry.email} · ${ownerTypeLabel}`;
 
-                infoDiv.appendChild(name);
-                infoDiv.appendChild(details);
-                neighborContainer.appendChild(infoDiv);
-
-                // Add email button
-                const emailButton = document.createElement('button');
-                emailButton.className = 'neighbor-email-btn';
-                emailButton.type = 'button';
-                emailButton.innerHTML = `<i class="fas fa-envelope"></i> ${this.t('profile.neighbors.sendEmail', 'Enviar correo')}`;
-                emailButton.addEventListener('click', () => this.handleSendEmail(entry, emailButton));
-                neighborContainer.appendChild(emailButton);
-
-                card.appendChild(neighborContainer);
+                card.appendChild(name);
+                card.appendChild(details);
             });
 
             this.neighborsList.appendChild(card);
@@ -533,34 +516,6 @@ class ProfileMenu {
             empty.className = 'empty-state';
             empty.textContent = this.t('profile.neighbors.empty', 'Aún no hay otros usuarios registrados en estas viviendas.');
             this.neighborsList.appendChild(empty);
-        }
-    }
-
-    async handleSendEmail(neighbor, button) {
-        const originalText = button.innerHTML;
-        button.disabled = true;
-        button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${this.t('profile.neighbors.emailSending', 'Enviando...')}`;
-
-        try {
-            const { data, error } = await this.supabase.rpc('send_neighbor_contact_email', {
-                recipient_email: neighbor.email,
-                sender_name: this.state.propietario?.nombre || this.state.user?.email || 'Vecino'
-            });
-
-            if (error) {
-                throw error;
-            }
-
-            this.showMessage('success', this.t('profile.neighbors.emailSent', 'Email enviado correctamente'));
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.disabled = false;
-            }, 2000);
-        } catch (error) {
-            console.error('Error sending email:', error);
-            this.showMessage('error', this.t('profile.neighbors.emailError', 'No se pudo enviar el email'));
-            button.innerHTML = originalText;
-            button.disabled = false;
         }
     }
 
