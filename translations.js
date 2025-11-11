@@ -170,7 +170,29 @@ class TranslationManager {
                 'password.recovery.invalidToken': 'El enlace de recuperación es inválido o ha expirado. Por favor solicita uno nuevo.',
                 'password.strength.weak': 'Fortaleza de Contraseña: Débil',
                 'password.strength.medium': 'Fortaleza de Contraseña: Media',
-                'password.strength.strong': 'Fortaleza de Contraseña: Fuerte'
+                'password.strength.strong': 'Fortaleza de Contraseña: Fuerte',
+                
+                // Onboarding Properties
+                'onboarding.title': 'Agregar Tu Vivienda',
+                'onboarding.subtitle': 'Completa los datos de tu inmueble en Lomas 2 para acceder a la plataforma',
+                'onboarding.selectBlock': 'Selecciona el número de bloque',
+                'onboarding.selectPortal': 'Selecciona el portal',
+                'onboarding.selectFloor': 'Selecciona la planta',
+                'onboarding.selectLetter': 'Selecciona la letra',
+                'onboarding.selectRole': 'Selecciona tu rol',
+                'onboarding.addButton': 'Agregar Vivienda',
+                'onboarding.continueButton': 'Continuar al Dashboard',
+                'onboarding.logoutButton': 'Salir',
+                'onboarding.addedProperties': 'Viviendas agregadas:',
+                'onboarding.helpText': 'Necesitas al menos una vivienda para continuar',
+                'onboarding.skipHelp': '¿Quieres agregar viviendas más tarde?',
+                'onboarding.saving': 'Guardando vivienda...',
+                'onboarding.success': 'Vivienda agregada correctamente',
+                'onboarding.error.required': 'Completa todos los campos',
+                'onboarding.error.duplicate': 'Esta vivienda ya fue agregada',
+                'onboarding.error.save': 'No se pudo guardar la vivienda',
+                'onboarding.error.removePrimary': 'No puedes eliminar la vivienda principal'
+
             },
             en: {
                 // Main page (index.html)
@@ -340,7 +362,29 @@ class TranslationManager {
                 'password.recovery.invalidToken': 'The recovery link is invalid or has expired. Please request a new one.',
                 'password.strength.weak': 'Password Strength: Weak',
                 'password.strength.medium': 'Password Strength: Medium',
-                'password.strength.strong': 'Password Strength: Strong'
+                'password.strength.strong': 'Password Strength: Strong',
+                
+                // Onboarding Properties
+                'onboarding.title': 'Add Your Property',
+                'onboarding.subtitle': 'Complete your property details in Lomas 2 to access the platform',
+                'onboarding.selectBlock': 'Select the block number',
+                'onboarding.selectPortal': 'Select the portal',
+                'onboarding.selectFloor': 'Select the floor',
+                'onboarding.selectLetter': 'Select the letter',
+                'onboarding.selectRole': 'Select your role',
+                'onboarding.addButton': 'Add Property',
+                'onboarding.continueButton': 'Continue to Dashboard',
+                'onboarding.logoutButton': 'Logout',
+                'onboarding.addedProperties': 'Added properties:',
+                'onboarding.helpText': 'You need at least one property to continue',
+                'onboarding.skipHelp': 'Want to add properties later?',
+                'onboarding.saving': 'Saving property...',
+                'onboarding.success': 'Property added successfully',
+                'onboarding.error.required': 'Complete all fields',
+                'onboarding.error.duplicate': 'This property has already been added',
+                'onboarding.error.save': 'Could not save the property',
+                'onboarding.error.removePrimary': 'You cannot remove the primary property'
+
             },
             fr: {
                 // Page principale (index.html)
@@ -510,7 +554,29 @@ class TranslationManager {
                 'password.recovery.invalidToken': 'Le lien de récupération est invalide ou a expiré. Veuillez en demander un nouveau.',
                 'password.strength.weak': 'Force du mot de passe: Faible',
                 'password.strength.medium': 'Force du mot de passe: Moyen',
-                'password.strength.strong': 'Force du mot de passe: Fort'
+                'password.strength.strong': 'Force du mot de passe: Fort',
+                
+                // Onboarding Properties
+                'onboarding.title': 'Ajouter Votre Propriété',
+                'onboarding.subtitle': 'Complétez les détails de votre propriété à Lomas 2 pour accéder à la plateforme',
+                'onboarding.selectBlock': 'Sélectionnez le numéro du bloc',
+                'onboarding.selectPortal': 'Sélectionnez le portail',
+                'onboarding.selectFloor': 'Sélectionnez l\'étage',
+                'onboarding.selectLetter': 'Sélectionnez la lettre',
+                'onboarding.selectRole': 'Sélectionnez votre rôle',
+                'onboarding.addButton': 'Ajouter une Propriété',
+                'onboarding.continueButton': 'Continuer vers le Tableau de Bord',
+                'onboarding.logoutButton': 'Se Déconnecter',
+                'onboarding.addedProperties': 'Propriétés ajoutées:',
+                'onboarding.helpText': 'Vous devez avoir au moins une propriété pour continuer',
+                'onboarding.skipHelp': 'Voulez-vous ajouter des propriétés plus tard?',
+                'onboarding.saving': 'Enregistrement de la propriété...',
+                'onboarding.success': 'Propriété ajoutée avec succès',
+                'onboarding.error.required': 'Complétez tous les champs',
+                'onboarding.error.duplicate': 'Cette propriété a déjà été ajoutée',
+                'onboarding.error.save': 'Impossible d\'enregistrer la propriété',
+                'onboarding.error.removePrimary': 'Vous ne pouvez pas supprimer la propriété principale'
+
             },
             de: {
                 // Hauptseite (index.html)
@@ -680,7 +746,29 @@ class TranslationManager {
                 'password.recovery.invalidToken': 'Der Wiederherstellungslink ist ungültig oder abgelaufen. Bitte fordern Sie einen neuen an.',
                 'password.strength.weak': 'Passwort-Sicherheit: Schwach',
                 'password.strength.medium': 'Passwort-Sicherheit: Mittel',
-                'password.strength.strong': 'Passwort-Sicherheit: Stark'
+                'password.strength.strong': 'Passwort-Sicherheit: Stark',
+                
+                // Onboarding Properties
+                'onboarding.title': 'Ihre Eigenschaft hinzufügen',
+                'onboarding.subtitle': 'Füllen Sie Ihre Immobiliendaten in Lomas 2 aus, um auf die Plattform zuzugreifen',
+                'onboarding.selectBlock': 'Wählen Sie die Blocknummer aus',
+                'onboarding.selectPortal': 'Wählen Sie das Portal aus',
+                'onboarding.selectFloor': 'Wählen Sie die Etage aus',
+                'onboarding.selectLetter': 'Wählen Sie den Buchstaben aus',
+                'onboarding.selectRole': 'Wählen Sie Ihre Rolle aus',
+                'onboarding.addButton': 'Eigenschaft hinzufügen',
+                'onboarding.continueButton': 'Zum Dashboard fortfahren',
+                'onboarding.logoutButton': 'Abmelden',
+                'onboarding.addedProperties': 'Hinzugefügte Immobilien:',
+                'onboarding.helpText': 'Sie müssen mindestens eine Immobilie hinzufügen, um fortzufahren',
+                'onboarding.skipHelp': 'Möchten Sie später Immobilien hinzufügen?',
+                'onboarding.saving': 'Eigenschaft wird gespeichert...',
+                'onboarding.success': 'Eigenschaft erfolgreich hinzugefügt',
+                'onboarding.error.required': 'Füllen Sie alle Felder aus',
+                'onboarding.error.duplicate': 'Diese Immobilie wurde bereits hinzugefügt',
+                'onboarding.error.save': 'Die Immobilie konnte nicht gespeichert werden',
+                'onboarding.error.removePrimary': 'Sie können die primäre Immobilie nicht entfernen'
+
             }
         };
         

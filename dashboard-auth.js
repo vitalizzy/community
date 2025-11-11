@@ -65,8 +65,10 @@ async function loadUserData() {
             sessionStorage.setItem('propietario', JSON.stringify(propietarioData));
         } else {
             console.error('No se encontraron datos del propietario');
-            // Usuario existe pero no tiene datos de propietario
-            showDataError();
+            // Usuario existe pero no tiene datos de propietario - redirigir a onboarding
+            console.log('Redirigiendo a onboarding para agregar vivienda...');
+            window.location.href = 'onboarding-properties.html';
+            return;
         }
     } catch (error) {
         console.error('Error cargando datos del usuario:', error);

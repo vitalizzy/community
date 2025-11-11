@@ -267,10 +267,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Mostrar mensaje de verificación de email
                 showEmailVerificationMessage(formData.email);
             } else {
-                // Si no requiere confirmación, redirigir directamente
-                showAlert('success', '¡Registro exitoso! Redirigiendo al dashboard...');
+                // Si no requiere confirmación, redirigir a la pantalla de onboarding
+                showAlert('success', '¡Registro exitoso! Configurando tu perfil...');
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'onboarding-properties.html';
                 }, 2000);
             }
             
