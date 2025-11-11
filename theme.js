@@ -74,10 +74,16 @@ class ThemeManager {
 }
 
 // Inicializar tema cuando el DOM esté listo
+function initializeThemeManager() {
+    const manager = new ThemeManager();
+    window.themeManager = manager;
+    return manager;
+}
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        new ThemeManager();
+        initializeThemeManager();
     });
 } else {
-    new ThemeManager();
+    initializeThemeManager();
 }

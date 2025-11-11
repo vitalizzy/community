@@ -16,6 +16,7 @@
     <script src="translations.js" defer></script>
     <script src="theme.js" defer></script>
     <script src="dashboard-auth.js" defer></script>
+    <script src="profile-menu.js" defer></script>
     <style>
         .dashboard-nav {
             display: flex;
@@ -144,6 +145,545 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        .profile-menu-container {
+            position: relative;
+        }
+
+        .profile-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffff;
+            border: 1px solid #cbd5e0;
+            border-radius: 999px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        html[data-theme="dark"] .profile-trigger {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .profile-trigger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(103, 126, 234, 0.15);
+        }
+
+        .profile-trigger i {
+            color: #a0aec0;
+        }
+
+        .profile-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .profile-avatar-lg {
+            width: 56px;
+            height: 56px;
+            font-size: 18px;
+        }
+
+        .profile-trigger-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.1;
+        }
+
+        .profile-name {
+            font-size: 14px;
+        }
+
+        .profile-email {
+            font-size: 12px;
+            color: #718096;
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        html[data-theme="dark"] .profile-email {
+            color: var(--text-secondary);
+        }
+
+        .profile-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 32, 44, 0.55);
+            backdrop-filter: blur(2px);
+            z-index: 1998;
+        }
+
+        .profile-backdrop[hidden] {
+            display: none;
+        }
+
+        .profile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            max-width: 100%;
+            height: 100%;
+            background: #ffffff;
+            box-shadow: -4px 0 30px rgba(15, 23, 42, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1999;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html[data-theme="dark"] .profile-drawer {
+            background: var(--card-bg);
+            box-shadow: -4px 0 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-drawer.open {
+            transform: translateX(0);
+        }
+
+        .profile-drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            gap: 16px;
+        }
+
+        html[data-theme="dark"] .profile-drawer-header {
+            border-bottom-color: var(--border-color);
+        }
+
+        .profile-drawer-info h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        html[data-theme="dark"] .profile-drawer-info h2 {
+            color: var(--text-primary);
+        }
+
+        .profile-drawer-info p {
+            margin: 4px 0 0;
+            color: #718096;
+            font-size: 13px;
+        }
+
+        html[data-theme="dark"] .profile-drawer-info p {
+            color: var(--text-secondary);
+        }
+
+        .profile-drawer-content {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .profile-section {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #f9fafb;
+        }
+
+        html[data-theme="dark"] .profile-section {
+            border-color: var(--border-color);
+            background: var(--bg-secondary);
+        }
+
+        .profile-section h3 {
+            margin: 0 0 16px;
+            font-size: 16px;
+            color: #2d3748;
+        }
+
+        html[data-theme="dark"] .profile-section h3 {
+            color: var(--text-primary);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .properties-list,
+        .neighbors-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .property-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        html[data-theme="dark"] .property-card {
+            border-color: var(--border-color);
+            background: var(--card-bg);
+        }
+
+        .property-card-title {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        html[data-theme="dark"] .property-card-title {
+            color: var(--text-primary);
+        }
+
+        .property-meta {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        html[data-theme="dark"] .property-meta {
+            color: var(--text-secondary);
+        }
+
+        .property-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.15);
+            color: #4c51bf;
+            border-radius: 999px;
+            padding: 2px 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        html[data-theme="dark"] .tag {
+            background: rgba(96, 165, 250, 0.25);
+            color: var(--accent-light);
+        }
+
+        .property-form {
+            margin-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+        }
+
+        html[data-theme="dark"] .property-form {
+            border-top-color: var(--border-color);
+        }
+
+        .property-form h4 {
+            margin: 0 0 12px;
+            font-size: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .form-grid label,
+        .alias-field,
+        .contact-form label {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        html[data-theme="dark"] .form-grid label,
+        html[data-theme="dark"] .alias-field,
+        html[data-theme="dark"] .contact-form label {
+            color: var(--text-primary);
+        }
+
+        select,
+        .property-form input,
+        .contact-form input {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            background: #ffffff;
+            color: #2d3748;
+        }
+
+        html[data-theme="dark"] select,
+        html[data-theme="dark"] .property-form input,
+        html[data-theme="dark"] .contact-form input {
+            border-color: var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #4a5568;
+            margin: 12px 0 16px;
+        }
+
+        html[data-theme="dark"] .checkbox-field {
+            color: var(--text-primary);
+        }
+
+        .checkbox-field input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .danger-btn,
+        .icon-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .primary-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+        }
+
+        .primary-btn:hover {
+            background: #5568d3;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #4a5568;
+            border: 1px solid #cbd5e0;
+            padding: 8px 14px;
+        }
+
+        .secondary-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        html[data-theme="dark"] .secondary-btn {
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        html[data-theme="dark"] .secondary-btn:hover {
+            border-color: var(--accent-light);
+            color: var(--accent-light);
+        }
+
+        .danger-btn {
+            background: rgba(252, 129, 129, 0.15);
+            color: #c53030;
+            border: 1px solid rgba(245, 101, 101, 0.4);
+            padding: 10px 16px;
+        }
+
+        .danger-btn:hover {
+            background: rgba(252, 129, 129, 0.25);
+        }
+
+        html[data-theme="dark"] .danger-btn {
+            color: #fed7d7;
+            border-color: rgba(252, 129, 129, 0.4);
+            background: rgba(229, 62, 62, 0.25);
+        }
+
+        .icon-btn {
+            border: none;
+            background: transparent;
+            color: #a0aec0;
+            padding: 6px;
+        }
+
+        .icon-btn:hover {
+            color: #4a5568;
+        }
+
+        html[data-theme="dark"] .icon-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .profile-message {
+            margin: 12px 24px 0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .profile-message.show {
+            display: block;
+        }
+
+        .profile-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .profile-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .profile-message.info {
+            background: #ebf8ff;
+            color: #2c5282;
+            border: 1px solid #bee3f8;
+        }
+
+        .profile-drawer-footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        html[data-theme="dark"] .profile-drawer-footer {
+            border-top-color: var(--border-color);
+        }
+
+        .preference-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .preference-row:last-child {
+            border-bottom: none;
+        }
+
+        html[data-theme="dark"] .preference-row {
+            border-bottom-color: var(--border-color);
+        }
+
+        .neighbor-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            background: #ffffff;
+        }
+
+        html[data-theme="dark"] .neighbor-card {
+            border-color: var(--border-color);
+            background: var(--card-bg);
+        }
+
+        .neighbor-card h4 {
+            margin: 0 0 4px;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        html[data-theme="dark"] .neighbor-card h4 {
+            color: var(--text-primary);
+        }
+
+        .neighbor-card p {
+            margin: 0;
+            font-size: 12px;
+            color: #718096;
+        }
+
+        html[data-theme="dark"] .neighbor-card p {
+            color: var(--text-secondary);
+        }
+
+        .neighbor-property {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4c51bf;
+            margin-bottom: 8px;
+        }
+
+        html[data-theme="dark"] .neighbor-property {
+            color: var(--accent-light);
+        }
+
+        .empty-state {
+            padding: 16px;
+            border-radius: 10px;
+            background: rgba(113, 128, 150, 0.1);
+            color: #4a5568;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        html[data-theme="dark"] .empty-state {
+            background: rgba(113, 128, 150, 0.2);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .profile-drawer {
+                width: 100%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-drawer-footer {
+                flex-direction: column;
+            }
+        }
+
+        body.profile-open {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="no-scroll loading">
@@ -161,10 +701,16 @@
                 <i class="fas fa-chart-line"></i>
                 <span data-i18n="dashboard.title">Panel de Control</span>
             </h1>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span data-i18n="nav.logout">Cerrar Sesión</span>
-            </button>
+            <div class="profile-menu-container">
+                <button class="profile-trigger" id="profileMenuTrigger" aria-haspopup="true" aria-expanded="false">
+                    <span class="profile-avatar" id="profileAvatar">--</span>
+                    <span class="profile-trigger-text">
+                        <span class="profile-name" id="profileName" data-i18n="profile.menu.title">Tu cuenta</span>
+                        <span class="profile-email" id="profileTriggerEmail">-</span>
+                    </span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
         </div>
 
         <div class="welcome-section">
@@ -176,10 +722,158 @@
         </div>
     </div>
 
-    <script>
-        function logout() {
-            window.location.href = 'index.html';
-        }
-    </script>
+    <div class="profile-backdrop" id="profileBackdrop" hidden></div>
+
+    <aside class="profile-drawer" id="profileDrawer" aria-hidden="true">
+        <div class="profile-drawer-header">
+            <div class="profile-avatar profile-avatar-lg" id="profileAvatarLarge">--</div>
+            <div class="profile-drawer-info">
+                <h2 id="profileDrawerName" data-i18n="profile.menu.title">Tu cuenta</h2>
+                <p id="profileDrawerEmail">-</p>
+            </div>
+            <button class="icon-btn" id="profileDrawerClose" aria-label="Cerrar">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="profile-message" id="profileMenuMessage" role="alert"></div>
+
+        <div class="profile-drawer-content">
+            <section class="profile-section" id="profilePropertiesSection">
+                <div class="section-header">
+                    <h3 data-i18n="profile.properties.title">Mis viviendas</h3>
+                    <button class="secondary-btn" id="toggleAddProperty">
+                        <i class="fas fa-plus"></i>
+                        <span data-i18n="profile.properties.addButton">Agregar vivienda</span>
+                    </button>
+                </div>
+                <div class="properties-list" id="profilePropertiesList"></div>
+
+                <form class="property-form" id="addPropertyForm" hidden>
+                    <h4 data-i18n="profile.properties.form.title">Agregar vivienda</h4>
+                    <div class="form-grid">
+                        <label for="propertyBlock">
+                            <span data-i18n="register.block">Bloque</span>
+                            <select id="propertyBlock" required>
+                                <option value="" disabled selected></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </label>
+                        <label for="propertyPortal">
+                            <span data-i18n="register.portal">Portal</span>
+                            <select id="propertyPortal" required>
+                                <option value="" disabled selected></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </label>
+                        <label for="propertyFloor">
+                            <span data-i18n="register.floor">Planta</span>
+                            <select id="propertyFloor" required>
+                                <option value="" disabled selected></option>
+                                <option value="Bajo">Bajo</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="Atico">Atico</option>
+                            </select>
+                        </label>
+                        <label for="propertyLetter">
+                            <span data-i18n="register.letter">Letra</span>
+                            <select id="propertyLetter" required>
+                                <option value="" disabled selected></option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <label for="propertyAlias" class="alias-field">
+                        <span data-i18n="profile.properties.form.alias">Nombre interno (opcional)</span>
+                        <input type="text" id="propertyAlias" maxlength="80" data-i18n-placeholder="profile.properties.form.alias.placeholder">
+                    </label>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn" id="savePropertyBtn">
+                            <i class="fas fa-save"></i>
+                            <span data-i18n="profile.properties.form.submit">Guardar vivienda</span>
+                        </button>
+                        <button type="button" class="secondary-btn" id="cancelPropertyBtn">
+                            <i class="fas fa-times"></i>
+                            <span data-i18n="profile.properties.form.cancel">Cancelar</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="profile-section" id="profileNeighborsSection">
+                <div class="section-header">
+                    <h3 data-i18n="profile.neighbors.title">Vecinos registrados</h3>
+                    <button class="icon-btn" id="refreshNeighborsBtn" aria-label="Actualizar">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="neighbors-list" id="profileNeighborsList"></div>
+            </section>
+
+            <section class="profile-section" id="profileContactSection">
+                <h3 data-i18n="profile.contact.title">Información de contacto</h3>
+                <form id="contactForm" class="contact-form">
+                    <label for="contactPhone">
+                        <span data-i18n="profile.contact.phone">Teléfono</span>
+                        <input type="tel" id="contactPhone" name="phone" maxlength="25" autocomplete="tel">
+                    </label>
+                    <label class="checkbox-field">
+                        <input type="checkbox" id="contactGdpr">
+                        <span data-i18n="profile.contact.gdprLabel">Acepto la política de privacidad (GDPR)</span>
+                    </label>
+                    <button type="submit" class="primary-btn">
+                        <i class="fas fa-save"></i>
+                        <span data-i18n="profile.contact.save">Guardar cambios</span>
+                    </button>
+                </form>
+            </section>
+
+            <section class="profile-section" id="profilePreferencesSection">
+                <h3 data-i18n="profile.preferences.title">Preferencias</h3>
+                <div class="preference-row">
+                    <div>
+                        <h4 data-i18n="profile.preferences.theme">Tema</h4>
+                    </div>
+                    <button class="secondary-btn" id="profileThemeToggle">
+                        <i class="fas fa-adjust"></i>
+                        <span data-i18n="theme.toggle">Cambiar tema</span>
+                    </button>
+                </div>
+                <div class="preference-row">
+                    <div>
+                        <h4 data-i18n="profile.preferences.language">Idioma</h4>
+                    </div>
+                    <button class="secondary-btn" id="profileLanguageToggle">
+                        <i class="fas fa-language"></i>
+                        <span data-i18n="language.select">Seleccionar idioma</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div class="profile-drawer-footer">
+            <button class="logout-btn" data-i18n="profile.actions.logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </button>
+            <button class="danger-btn" id="deleteAccountBtn">
+                <i class="fas fa-user-slash"></i>
+                <span data-i18n="profile.actions.delete">Solicitar eliminación</span>
+            </button>
+        </div>
+    </aside>
 </body>
 </html>

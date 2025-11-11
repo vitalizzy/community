@@ -125,23 +125,54 @@ function displayUserInfo(propietario) {
         userType.textContent = tipos[propietario.tipo_propietario] || propietario.tipo_propietario;
     }
 
+    const profileName = document.getElementById('profileName');
+    if (profileName) {
+        profileName.textContent = propietario.nombre;
+    }
+
+    const profileDrawerName = document.getElementById('profileDrawerName');
+    if (profileDrawerName) {
+        profileDrawerName.textContent = propietario.nombre;
+    }
+
+    const triggerEmail = document.getElementById('profileTriggerEmail');
+    if (triggerEmail) {
+        triggerEmail.textContent = propietario.email;
+        triggerEmail.title = propietario.email;
+    }
+
+    const drawerEmail = document.getElementById('profileDrawerEmail');
+    if (drawerEmail) {
+        drawerEmail.textContent = propietario.email;
+    }
+
+    const initials = buildInitials(propietario.nombre);
+    const avatarSmall = document.getElementById('profileAvatar');
+    if (avatarSmall) {
+        avatarSmall.textContent = initials;
+    }
+
+    const avatarLarge = document.getElementById('profileAvatarLarge');
+    if (avatarLarge) {
+        avatarLarge.textContent = initials;
+    }
+
     console.log('Datos del usuario cargados:', propietario);
 }
 
 // Configurar botón de logout
 function setupLogoutButton() {
-    const logoutButton = document.querySelector('.logout-btn');
-    
-    if (logoutButton) {
-        logoutButton.addEventListener('click', async function(e) {
+    const logoutButtons = document.querySelectorAll('.logout-btn');
+    logoutButtons.forEach(button => {
+        button.addEventListener('click', async function(e) {
             e.preventDefault();
-            
+
             const confirmed = confirm('¿Estás seguro de que quieres cerrar sesión?');
             if (confirmed) {
                 await logout();
             }
         });
-    }
+    });
 }
 
 // Función para obtener datos del propietario desde sessionStorage o Supabase
@@ -167,3 +198,16 @@ async function getCachedPropietarioData() {
 
 // Exponer función para uso global
 window.getCachedPropietarioData = getCachedPropietarioData;
+
+function buildInitials(nombre) {
+    if (!nombre) {
+        return '--';
+    }
+
+    const parts = nombre.split(' ').filter(Boolean);
+    if (!parts.length) {
+        return '--';
+    }
+
+    return parts.slice(0, 2).map(p => p.charAt(0).toUpperCase()).join('') || '--';
+}

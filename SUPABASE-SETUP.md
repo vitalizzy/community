@@ -45,6 +45,17 @@
 3. Haz clic en "Run" o presiona `Ctrl + Enter`
 4. Esta función permite el registro de propietarios sin necesidad de sesión activa
 
+### 4️⃣.2 Crear Tabla de Propiedades Adicionales y Función RPC
+
+1. Estas tablas ya están incluidas en `supabase-schema.sql`
+2. Si ejecutaste ese archivo completo, ya están creadas
+3. Verifica en **Database** → **Tables** que exista `propiedades_adicionales`
+4. También deberías ver una función en **Database** → **Functions** llamada `get_neighbors_for_user_properties`
+
+> **¿Qué hace esto?**
+> - Tabla `propiedades_adicionales`: Almacena viviendas adicionales de cada propietario
+> - Función `get_neighbors_for_user_properties`: Devuelve todos los vecinos registrados en las mismas viviendas
+
 ### 5️⃣ Configurar Autenticación por Email
 
 1. Ve a **Authentication** → **Providers**
@@ -174,6 +185,9 @@
 | `nombre` | TEXT | Sí | Nombre completo |
 | `email` | TEXT | Sí | Email (único) |
 | `telefono` | TEXT | No | Teléfono de contacto |
+| `telefono_confirmado` | BOOLEAN | No | Si el teléfono ha sido verificado |
+| `gdpr_consent` | BOOLEAN | No | Si acepta la política GDPR |
+| `gdpr_consent_at` | TIMESTAMP | No | Fecha de aceptación GDPR |
 | `bloque` | TEXT | Sí | Bloque (1-8) |
 | `portal` | TEXT | Sí | Portal (1-2) |
 | `planta` | TEXT | Sí | Planta (Bajo, 1, 2, Atico) |
@@ -181,6 +195,38 @@
 | `tipo_propietario` | TEXT | Sí | Tipo (Dueno, PropertyManager, Inquilino) |
 | `created_at` | TIMESTAMP | Automático | Fecha de creación |
 | `updated_at` | TIMESTAMP | Automático | Última actualización |
+
+### Tabla: `propiedades_adicionales`
+
+| Campo | Tipo | Obligatorio | Descripción |
+|-------|------|-------------|-------------|
+| `id` | UUID | Sí | ID único del registro |
+| `user_id` | UUID | Sí | Referencia a auth.users |
+| `bloque` | TEXT | Sí | Bloque (1-8) |
+| `portal` | TEXT | Sí | Portal (1-2) |
+| `planta` | TEXT | Sí | Planta (Bajo, 1, 2, Atico) |
+| `letra` | TEXT | Sí | Letra (A, B, C) |
+| `alias` | TEXT | No | Nombre personalizado (ej: "Apartamento playa") |
+| `created_at` | TIMESTAMP | Automático | Fecha de creación |
+| `updated_at` | TIMESTAMP | Automático | Última actualización |
+
+### Función RPC: `get_neighbors_for_user_properties`
+
+Devuelve todos los vecinos registrados en las viviendas del usuario actual.
+
+**Parámetros:**
+- `p_user_id` (UUID): ID del usuario actual
+
+**Retorna:**
+```
+{
+  propiedad: TEXT,          // "Bloque X - Portal Y - PlantaZ L"
+  nombre: TEXT,             // Nombre del vecino
+  email: TEXT,              // Email del vecino
+  tipo_propietario: TEXT,   // Su tipo de propietario
+  es_usuario_actual: BOOLEAN // TRUE si es el usuario actual
+}
+```
 
 ---
 
